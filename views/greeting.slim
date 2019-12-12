@@ -1,7 +1,18 @@
-h1 = @greeting
-h2 = @users
+h1 =@username
 
-ul
-    - for user in @users
-        li= user['username']
+span =@status
 
+main
+    section id="activity"
+        h2 Din senaste aktivitet
+
+        - for log in @dataset
+            article
+                time=log['log_date']
+                span==log['content']
+
+    section id="log-activity"
+        h2 Logga aktivitet
+        form action="log-work" method="post"
+            textarea# name="log-content" cols="60" rows="30"
+            button type="submit" Spara

@@ -7,10 +7,27 @@ class App < Sinatra::Base
     end
 
     get '/' do
-        @greeting = "Hello world"
-        @users = @db.execute("SELECT * FROM USERS")
+        @dataset = @db.execute("SELECT student_id, username, log_date, content 
+                                FROM students 
+                                INNER JOIN logs ON students.student_id = logs.log_student 
+                                WHERE student_id = 1
+                                ORDER BY log_date DESC")
 
+        @username = @dataset.first["username"]
+        
+        if params["status"] == "saved"
+            @status = "Aktiviteten sparades"
+        end
+
+        
         slim :greeting        
+    end
+
+    post '/log-work' do
+        @log_content = params["log-content"].to_s
+        @db.execute("INSERT INTO logs (log_student, content) VALUES (?,?)", 1, @log_content);
+
+        redirect "/?status=saved"
     end
 
 end

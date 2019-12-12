@@ -1,3 +1,26 @@
 body {
     background-color: palevioletred;
 }
+
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+main section {
+    max-width: 50%;
+}
+
+main article {
+    margin-bottom: 1em;
+}
+
+time {
+    display: block;
+}
+
+
+pre {
+    white-space: pre-wrap;
+}
+
