@@ -31,7 +31,10 @@ class Seeder
                 log_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 log_student INTEGER,
                 log_date TEXT DEFAULT CURRENT_TIMESTAMP,
-                content TEXT NOT NULL,
+                done TEXT NOT NULL,
+                learned TEXT NOT NULL,
+                understood TEXT NOT NULL,
+                more TEXT NOT NULL,
                 FOREIGN KEY(log_student) REFERENCES students(student_id)
             )
         ")
@@ -39,9 +42,10 @@ class Seeder
 
     def self.populate_users 
         users = [
-            {username: "grill@korv.com", password_hash: BCrypt::Password.create("123")},
-            {username: "banan@paj.com", password_hash: BCrypt::Password.create("123")},
-            {username: "apple@paj.com", password_hash: BCrypt::Password.create("123")}
+            {username: "apple@frukt.se", password_hash: BCrypt::Password.create("123")},
+            {username: "banan@frukt.se", password_hash: BCrypt::Password.create("123")},
+            {username: "citron@frukt.se", password_hash: BCrypt::Password.create("123")},
+            {username: "daddel@frukt.se", password_hash: BCrypt::Password.create("123")}
           ]
       
           users.each do |user|
@@ -51,13 +55,15 @@ class Seeder
 
     def self.populate_logs
         logs = [
-            {student_id: "1" ,content: "Student 1 gjorde något"},
-            {student_id: "2" ,content: "Student 2 gjorde något"},
-            {student_id: "3" ,content: "Student 3 gjorde något"}
+            {student_id: "1", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
+            {student_id: "2", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
+            {student_id: "3", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
+            {student_id: "4", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
         ]
 
         logs.each do |log|
-            db.execute("INSERT INTO logs (log_student, content) VALUES (?,?)", log[:student_id], log[:content]);
+            db.execute("INSERT INTO logs (log_student, done, learned, understood, more) VALUES (?,?,?,?,?)", 
+                log[:student_id], log[:done], log[:learned], log[:understood], log[:more]);
         end
     end
 end
