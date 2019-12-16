@@ -17,7 +17,8 @@ h1,
 h2,
 h3,
 h4,
-legend {
+legend,
+label {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 500;
 }
@@ -25,24 +26,43 @@ legend {
 main {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5em;
 }
 
-main section {
-    max-width: 50%;
+#activity h2 {
+    margin-top: 0;
 }
 
-main article {
+#activity article {
     margin-bottom: 1em;
-    border-bottom: 1px solid black;
+    padding: 1em;
+}
+
+#activity article:nth-child(even) {
+    background-color: #48A882;
+}
+
+#activity h4 {
+    margin-bottom: 0.3em;
+}
+
+#activity p {
+    margin-top: 0.3em;
+}
+
+#activity time {
+    font-size: 1.2em;
 }
 
 time,
 textarea {
     display: block;
+    width: 100%;
 }
 
 fieldset {
     border: none;
+    padding: 0;
 }
 
 label,
@@ -51,12 +71,9 @@ button {
     margin-top: 1em;
 }
 
-button {
-    font-size: 1.5em;
-}
-
+button,
 legend {
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 pre {

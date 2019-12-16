@@ -3,23 +3,6 @@ h1 =@username
 span =@status
 
 main
-    section id="activity"
-        h2 Din senaste aktivitet
-
-        - for log in @dataset
-            article
-                time=log['log_date']
-                h3 Vad har du gjort under lektionen?
-                p==log['done']
-                h3 Vad har du lärt dig?
-                p==log['learned']
-                h3 Vad förstod du inte / vilka frågor har du inte fått svar på?
-                p==log['understood']
-                h3 Vad vill du lära dig mer om?
-                p==log['more']
-
-                
-
     fieldset id="log-activity"
         legend Logga aktivitet
         form action="log-work" method="post"
@@ -36,3 +19,22 @@ main
             textarea name="log-more" id="log-more" cols="60" rows="20"
 
             button type="submit" Spara
+
+    section id="activity"
+        h2 Din senaste aktivitet
+
+        - for log in @dataset
+            article
+                time=log['log_date']
+                sectcion
+                    h4 Vad har du gjort under lektionen?
+                    p==log['done']
+                section
+                    h4 Vad har du lärt dig?
+                    p==log['learned']
+                section
+                    h4 Vad förstod du inte / vilka frågor har du inte fått svar på?
+                    p==log['understood']
+                section
+                    h4 Vad vill du lära dig mer om?
+                    p==log['more']
