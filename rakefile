@@ -15,3 +15,16 @@ end
 task :debug do
     sh 'rackup'
 end
+
+#rake test
+task :test do
+  tests = Dir.glob('./spec/*_spec.rb').sort_by do |a|
+    basename = File.basename(a)
+    splitted = basename.split("_")
+    splitted.first.to_i
+  end
+  p tests
+  tests.each do |test|
+      p system("ruby #{test}")
+    end
+end
