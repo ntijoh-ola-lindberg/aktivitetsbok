@@ -11,7 +11,7 @@ body {
     color: #014152;
     font-weight: 100;
     font-family: serif;
-    margin: 1em;
+    padding: 2em 1em;
     margin-left: auto;
     margin-right: auto;
     max-width: 1200px;
@@ -46,7 +46,7 @@ main {
 
 #activity article {
     margin-bottom: 1em;
-    padding: 1em;
+    padding: 0.5em;
 }
 
 #activity article:nth-child(even) {
@@ -96,3 +96,5 @@ legend {
 pre {
     white-space: pre-wrap;
 }
+
+´
