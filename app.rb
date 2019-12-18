@@ -19,17 +19,8 @@ class App < Sinatra::Base
                                 WHERE student_id = ?
                                 ORDER BY log_date DESC", 1)
 
-                                #log[:student_id], log[:done], log[:learned], log[:understood], log[:more]);
-
-        #byebug
-
         @username = @dataset.first["username"]
-        
-        #if params["status"] == "saved"
-        #    @status = "Aktiviteten sparades"
-        #end
 
-        
         slim :greeting        
     end
 
@@ -40,8 +31,6 @@ class App < Sinatra::Base
         @log_more = params["log-more"].to_s
         @db.execute("INSERT INTO logs (log_student, done, learned, understood, more) VALUES (?, ?, ?, ?, ?)", 1, @log_done, @log_learned, @log_understood, @log_more);
 
-        #redirect "/?status=saved"
-        #todo: flash
         flash[:saved] = "Aktiviteten sparades"
         redirect back
     end
