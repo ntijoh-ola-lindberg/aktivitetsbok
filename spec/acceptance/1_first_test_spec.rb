@@ -22,4 +22,16 @@ class ActivityLogSpec < Minitest::Spec
     _(page).must_have_css('#log-activity')
   end
 
+  it 'input text to textareas' do
+    sleep 1
+    @time = Time.now
+    within("#activity-log-form") do 
+      fill_in('log-done', with: "Jag har gjort kl #{@time}" )
+      click_button 'Spara'
+    end
+
+    _(page).must_have_content("Jag har gjort kl #{@time}")
+
+  end
+
 end
