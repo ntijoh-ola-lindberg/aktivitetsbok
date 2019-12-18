@@ -1,10 +1,11 @@
-h1 =@username
+h1= "Inloggad som #{@username}"
 
 span =@status
 
 main
     fieldset id="log-activity"
         legend Logga aktivitet
+        
         form action="log-work" method="post"
             label(for="log-done") Vad har du gjort under lektionen?
             textarea name="log-done" id="log-done" cols="60" rows="20"

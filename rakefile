@@ -17,14 +17,30 @@ task :debug do
 end
 
 #rake test
-task :test do
-  tests = Dir.glob('./spec/*_spec.rb').sort_by do |a|
-    basename = File.basename(a)
-    splitted = basename.split("_")
-    splitted.first.to_i
-  end
-  p tests
-  tests.each do |test|
-      p system("ruby #{test}")
+namespace :test do
+  task :unit do
+    #sort test so that test files are run in order (random order is problematic for students )
+    tests = Dir.glob('./spec/unit/*_spec.rb').sort_by do |a|
+      basename = File.basename(a)
+      splitted = basename.split("_")
+      splitted.first.to_i
     end
+    tests.each do |test|
+      system("bundle exec 'ruby #{test}'")        
+    end
+  end
+
+  task :acceptance do
+    #sort test so that test files are run in order (random order is problematic for students )
+    tests = Dir.glob('./spec/acceptance/*_spec.rb').sort_by do |a|
+      basename = File.basename(a)
+      splitted = basename.split("_")
+      splitted.first.to_i
+    end
+    tests.each do |test|
+      #rest db before each test file is run
+      #Rake::Task["db:reset"].invoke
+      system("bundle exec 'ruby #{test}'")        
+    end
+  end
 end

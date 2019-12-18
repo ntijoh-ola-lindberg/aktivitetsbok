@@ -1,15 +1,16 @@
-#require_relative '../environment'
-require 'capybara/dsl'
+# encoding: UTF-8
+require 'bundler'
 
-Capybara.app = proc { |env| App.new.call(env) }
+Bundler.setup
+Bundler.require
 
-Capybara.configure do |config|
-    config.default_driver = :selenium_chrome #comment for headless tests
-    config.server = :webrick                 #comment for headless tests 
+require 'minitest/autorun'
+require 'minitest/spec'
+require 'minitest/reporters'
+
+MiniTest::Reporters.use!(MiniTest::Reporters::SpecReporter.new)
+
+
+class MiniTest::Spec
+  include Rack::Test::Methods
 end
-
-RSpec.configure do |config|
-  config.include Capybara::DSL
-  config.before { File.write("members.txt", "Anja\nMaren\n") }
-end
-

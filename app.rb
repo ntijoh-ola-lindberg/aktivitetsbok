@@ -10,10 +10,13 @@ class App < Sinatra::Base
         @dataset = @db.execute("SELECT student_id, username, log_date, done, learned, understood, more
                                 FROM students 
                                 INNER JOIN logs ON students.student_id = logs.log_student 
-                                WHERE student_id = 1
-                                ORDER BY log_date DESC")
+                                WHERE student_id = ?
+                                ORDER BY log_date DESC", 1)
 
                                 #log[:student_id], log[:done], log[:learned], log[:understood], log[:more]);
+
+        #require("byebug")
+        #byebug
 
         @username = @dataset.first["username"]
         
@@ -32,7 +35,9 @@ class App < Sinatra::Base
         @log_more = params["log-more"].to_s
         @db.execute("INSERT INTO logs (log_student, done, learned, understood, more) VALUES (?, ?, ?, ?, ?)", 1, @log_done, @log_learned, @log_understood, @log_more);
 
-        redirect "/?status=saved"
+        #redirect "/?status=saved"
+        #todo: flash
+        redirect back
     end
 
 end
