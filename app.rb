@@ -14,9 +14,8 @@ class App < Sinatra::Base
     end
 
     get '/' do
-
-        @hi = Hi.new
-        @greeting = @hi.get_random_greeting
+        
+        @greeting = Hi.new.get_random_greeting
 
         @dataset = @db.execute("SELECT student_id, username, log_date, done, learned, understood, more
                                 FROM students 
