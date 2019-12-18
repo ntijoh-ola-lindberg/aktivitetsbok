@@ -1,7 +1,8 @@
-h1= "Inloggad som #{@username}"
+h1 id="greeting" = "#{@greeting}!"
+p= "Inloggad som: #{@username}"
 
 -if flash && flash[:saved] 
-	span= flash[:saved]
+	p= flash[:saved]
 
 main
     fieldset id="log-activity"

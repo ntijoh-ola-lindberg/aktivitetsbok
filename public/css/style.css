@@ -11,6 +11,7 @@ body {
     color: #014152;
     font-weight: 100;
     font-family: serif;
+    margin: 1em;
 }
 
 h1,
@@ -27,6 +28,13 @@ main {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5em;
+}
+
+#greeting {
+    font-size: 4em;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin: 0;
 }
 
 #activity h2 {
@@ -64,9 +72,11 @@ textarea {
     width: 100%;
 }
 
-fieldset {
+fieldset,
+legend {
     border: none;
     padding: 0;
+    margin: 0;
 }
 
 label,
