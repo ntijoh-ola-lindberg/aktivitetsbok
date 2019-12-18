@@ -1,4 +1,10 @@
+require 'byebug'
+require 'rack-flash'
+
 class App < Sinatra::Base
+
+    enable :sessions
+	use Rack::Flash
 
     before do 
         @db = SQLite3::Database.new("db/app.sqlite")
@@ -15,14 +21,13 @@ class App < Sinatra::Base
 
                                 #log[:student_id], log[:done], log[:learned], log[:understood], log[:more]);
 
-        #require("byebug")
         #byebug
 
         @username = @dataset.first["username"]
         
-        if params["status"] == "saved"
-            @status = "Aktiviteten sparades"
-        end
+        #if params["status"] == "saved"
+        #    @status = "Aktiviteten sparades"
+        #end
 
         
         slim :greeting        
@@ -37,6 +42,7 @@ class App < Sinatra::Base
 
         #redirect "/?status=saved"
         #todo: flash
+        flash[:saved] = "Aktiviteten sparades"
         redirect back
     end
 

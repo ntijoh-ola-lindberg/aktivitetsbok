@@ -8,6 +8,7 @@ gem "bcrypt"
 gem "rerun"
 gem "sqlite3"
 gem "slim"
+gem 'rack-flash3'
 
 #test
 gem 'capybara', '>=3.29'

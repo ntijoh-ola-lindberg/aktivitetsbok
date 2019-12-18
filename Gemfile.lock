@@ -28,12 +28,13 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    mocha (1.11.1)
     mustermann (1.0.3)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
     public_suffix (4.0.1)
     rack (2.0.7)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (2.0.7)
       rack
     rack-test (1.1.0)
@@ -72,7 +73,7 @@ DEPENDENCIES
   capybara (>= 3.29)
   minitest
   minitest-reporters
-  mocha
+  rack-flash3
   rerun
   selenium-webdriver
   sinatra

@@ -1,6 +1,9 @@
 h1= "Inloggad som #{@username}"
 
-span =@status
+/*span =@status*/
+
+-if flash && flash[:saved] 
+	span= flash[:saved]
 
 main
     fieldset id="log-activity"
