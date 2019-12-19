@@ -15,7 +15,6 @@ class Seeder
 
     def self.drop_tables
         db.execute("DROP TABLE IF EXISTS students");
-        db.execute("DROP TABLE IF EXISTS logs")
         db.execute("DROP TABLE IF EXISTS activities")
     end
 

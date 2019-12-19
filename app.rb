@@ -2,24 +2,49 @@ require 'byebug'
 require 'rack-flash'
 require './model/hi.rb'
 require './model/activity.rb'
+require './model/student.rb'
 
 class App < Sinatra::Base
 
     enable :sessions
     use Rack::Flash
-    @activity
-    @@userid = 1
-    
+
     before do
-        @activity = Activity.new(@@userid)
+
+        @current_user = Student.get_by_id(session[:studentid])
+        @activity = Activity.new(session[:studentid])
+   
+        if request.get? && request.path != "/login"
+            unless @current_user
+                redirect '/login'
+            end
+        end
     end
 
     get '/' do
-        
         @greeting = Hi.new.get_random_greeting
         @log = @activity.get_activity
 
         slim :activity        
+    end
+
+    get '/login' do
+        slim :login
+    end
+
+    post '/do-login'do
+        username = params["username"].to_s
+        password_nothashed = params["password"].to_s
+
+        student = Student.login(username, password_nothashed)
+        
+        if student
+            session[:studentid] = student.id
+            
+            redirect '/'
+        else
+            redirect '/login'
+        end
     end
 
     post '/log-work' do
