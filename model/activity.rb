@@ -15,7 +15,7 @@ class Activity
 
         @act = @db.execute("SELECT student_id, username, log_date, done, learned, understood, more
             FROM students 
-            INNER JOIN logs ON students.student_id = logs.log_student 
+            INNER JOIN activities ON students.student_id = activities.log_student 
             WHERE student_id = ?
             ORDER BY log_date DESC", @userid)
     end
@@ -29,7 +29,7 @@ class Activity
     end
 
     def log_activity(log_done, log_learned, log_understood, log_more)
-        @db.execute("INSERT INTO logs 
+        @db.execute("INSERT INTO activities 
             (log_student, done, learned, understood, more) 
             VALUES (?, ?, ?, ?, ?)", 
             @userid, log_done, log_learned, log_understood, log_more);

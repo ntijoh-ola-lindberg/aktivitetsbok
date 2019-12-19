@@ -4,7 +4,7 @@ class Seeder
        drop_tables 
        create_tables
        populate_users
-       populate_logs
+       populate_activities
     end
 
     private 
@@ -16,6 +16,7 @@ class Seeder
     def self.drop_tables
         db.execute("DROP TABLE IF EXISTS students");
         db.execute("DROP TABLE IF EXISTS logs")
+        db.execute("DROP TABLE IF EXISTS activities")
     end
 
     def self.create_tables
@@ -27,7 +28,7 @@ class Seeder
         ");
 
         db.execute("
-            CREATE TABLE logs (
+            CREATE TABLE activities (
                 log_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 log_student INTEGER,
                 log_date TEXT DEFAULT CURRENT_TIMESTAMP,
@@ -53,17 +54,17 @@ class Seeder
           end
     end
 
-    def self.populate_logs
-        logs = [
+    def self.populate_activities
+        activities = [
             {student_id: "1", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
             {student_id: "2", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
             {student_id: "3", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
             {student_id: "4", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
         ]
 
-        logs.each do |log|
-            db.execute("INSERT INTO logs (log_student, done, learned, understood, more) VALUES (?,?,?,?,?)", 
-                log[:student_id], log[:done], log[:learned], log[:understood], log[:more]);
+        activities.each do |activity|
+            db.execute("INSERT INTO activities (log_student, done, learned, understood, more) VALUES (?,?,?,?,?)", 
+                activity[:student_id], activity[:done], activity[:learned], activity[:understood], activity[:more]);
         end
     end
 end
