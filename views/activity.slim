@@ -1,5 +1,5 @@
 h1 id="greeting" = "#{@greeting}!"
-p= "Inloggad som: #{@username}"
+p= "Inloggad som: #{@activity.get_username}"
 
 -if flash && flash[:saved] 
 	p= flash[:saved]
@@ -26,7 +26,7 @@ main
     section id="activity"
         h2 Din senaste aktivitet
 
-        - for log in @dataset
+        - for log in @log
             article
                 time=log['log_date']
                 sectcion
