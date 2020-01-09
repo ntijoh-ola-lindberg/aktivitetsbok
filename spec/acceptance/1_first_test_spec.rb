@@ -11,6 +11,11 @@ class ActivityLogSpec < Minitest::Spec
 
   before do
     visit '/'
+    within("#login-form") do
+      fill_in('username', with: "apple@frukt.se")
+      fill_in('password', with: "123")
+      click_button 'Logga in'
+    end
   end
 
   after do 
@@ -18,14 +23,14 @@ class ActivityLogSpec < Minitest::Spec
   end
 
   it 'check for activity log id' do
-    sleep 1 #so we can see
-    _(page).must_have_css('#log-activity')
+        _(page).must_have_css('#log-activity')
   end
 
   it 'write text in 4 textareas' do
     @time = Time.now #to get a unique string
     within("#activity-log-form") do 
       fill_in('log-done', with: "Test: Lorem ipsum dolor sit amet: #{@time}" )
+      sleep 2 #so we can see
       fill_in('log-learned', with: "Test: Consectetur adipiscing elit: #{@time}" )
       fill_in('log-understood', with: "Test: Nam iaculis felis at lacus efficitur: #{@time}" )
       fill_in('log-more', with: "Test: A tempor urna lacinia: #{@time}" )
