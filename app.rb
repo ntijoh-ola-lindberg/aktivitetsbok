@@ -32,7 +32,7 @@ class App < Sinatra::Base
         slim :login
     end
 
-    post '/do-login'do
+    post '/do-login' do
         username = params["username"].to_s
         password_nothashed = params["password"].to_s
 
