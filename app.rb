@@ -10,10 +10,9 @@ class App < Sinatra::Base
     use Rack::Flash
 
     before do
-
         @current_user = Student.get_by_id(session[:studentid])
         @activity = Activity.new(session[:studentid])
-   
+
         if request.get? && request.path != "/login"
             unless @current_user
                 redirect '/login'
@@ -30,6 +29,12 @@ class App < Sinatra::Base
 
     get '/login' do
         slim :login
+    end
+
+    get '/logout' do
+        @current_user = nil
+        flash[:loggedout] = "Du är utloggad"
+        redirect '/'
     end
 
     post '/do-login' do

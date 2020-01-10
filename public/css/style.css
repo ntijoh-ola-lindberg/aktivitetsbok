@@ -33,6 +33,10 @@ main {
     gap: 1.5em;
 }
 
+nav p {
+    margin: 0;
+}
+
 #greeting {
     font-size: 4em;
     font-weight: 100;
