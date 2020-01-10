@@ -1,5 +1,8 @@
 #rake run
 #rake debug
+#rake seed
+#rake test:unit
+#rake test:acceptance
 
 task :seed do
     require "bundler"
@@ -16,31 +19,29 @@ task :debug do
     sh 'rackup'
 end
 
-#rake test
 namespace :test do
   task :unit do
-    #sort test so that test files are run in order (random order is problematic for students )
-    tests = Dir.glob('./spec/unit/*_spec.rb').sort_by do |a|
-      basename = File.basename(a)
-      splitted = basename.split("_")
-      splitted.first.to_i
-    end
+    tests =  get_tests_sorted('./spec/unit/*_spec.rb')
     tests.each do |test|
       system("bundle exec 'ruby #{test}'")        
     end
   end
 
   task :acceptance do
-    #sort test so that test files are run in order (random order is problematic for students )
-    tests = Dir.glob('./spec/acceptance/*_spec.rb').sort_by do |a|
+    tests =  get_tests_sorted('./spec/acceptance/*_spec.rb')
+    tests.each do |test|
+      #Rake::Task["seed"].invoke #reset db before each test file is run
+      system("bundle exec 'ruby #{test}'")        
+    end
+  end
+
+  def get_tests_sorted(test_folder_path)
+    tests = Dir.glob(test_folder_path).sort_by do |a|
       basename = File.basename(a)
       splitted = basename.split("_")
       splitted.first.to_i
     end
-    tests.each do |test|
-      #rest db before each test file is run
-      #Rake::Task["db:reset"].invoke
-      system("bundle exec 'ruby #{test}'")        
-    end
+    return tests
   end
+
 end
