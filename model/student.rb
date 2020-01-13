@@ -3,7 +3,7 @@ require 'byebug'
 
 class Student
 
-    attr_reader :username, :id, :password_hashed
+    attr_reader :id, :username, :password_hashed
 
     def initialize(dbhash)
         @id = dbhash["student_id"].to_i
@@ -51,5 +51,5 @@ class Student
 
         return false
     end
-    
+
 end
