@@ -22,7 +22,7 @@ class App < Sinatra::Base
 
     get '/' do
         @greeting = Hi.new.get_random_greeting
-        @log = @activity.get_activity
+        @log = @activity.all_activity
 
         slim :activity        
     end

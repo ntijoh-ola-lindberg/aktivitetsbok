@@ -51,7 +51,5 @@ class Student
 
         return false
     end
-
-
-
+    
 end
