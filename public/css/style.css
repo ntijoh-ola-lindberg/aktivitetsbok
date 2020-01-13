@@ -39,8 +39,14 @@ main {
     gap: 1.5em;
 }
 
+nav {
+    margin-bottom: 0.5em;
+}
+
 nav p {
     margin: 0;
+    display: inline-block;
+    margin-right: 0.5em;
 }
 
 #greeting {
