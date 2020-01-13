@@ -32,7 +32,7 @@ class App < Sinatra::Base
     end
 
     get '/logout' do
-        @current_user = nil
+        session.clear
         flash[:loggedout] = "Du är utloggad"
         redirect '/'
     end
