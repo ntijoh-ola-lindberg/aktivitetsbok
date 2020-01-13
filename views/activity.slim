@@ -26,9 +26,9 @@ main
         h2 Din senaste aktivitet
 
         - for log in @log
-            article
+            article id=log['log_id']
                 time=log['log_date']
-                sectcion
+                section
                     h4 Vad har du gjort under lektionen?
                     p==log['done']
                 section
@@ -40,3 +40,5 @@ main
                 section
                     h4 Vad vill du lära dig mer om?
                     p==log['more']
+                a#edit-activity href="/?edit-activity&log-id=#{log['log_id']}" Ändra
+                

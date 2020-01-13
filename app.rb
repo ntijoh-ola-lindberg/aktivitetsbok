@@ -24,6 +24,9 @@ class App < Sinatra::Base
         @greeting = Hi.new.get_random_greeting
         @log = @activity.all_activity
 
+        edit_activity = params["edit-activity"].to_s
+        log_id = params["log-id"].to_i
+
         slim :activity        
     end
 
@@ -62,6 +65,10 @@ class App < Sinatra::Base
 
         flash[:saved] = "Aktiviteten sparades"
         redirect back
+    end
+
+    get '/edit-activity' do
+        log_id = params["log-id"].to_i
     end
 
 end

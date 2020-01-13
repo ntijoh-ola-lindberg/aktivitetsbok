@@ -27,6 +27,10 @@ label {
     font-weight: 500;
 }
 
+a {
+    color: #0C7871;
+}
+
 #flash {
     background-color: #48A882;
     padding: 0.5em;

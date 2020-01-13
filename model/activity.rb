@@ -9,7 +9,7 @@ class Activity
         @db = SQLite3::Database.new("db/app.sqlite")
         @db.results_as_hash = true
 
-        @all_activity = @db.execute("SELECT student_id, username, log_date, done, learned, understood, more
+        @all_activity = @db.execute("SELECT log_id, student_id, username, log_date, done, learned, understood, more
             FROM students 
             INNER JOIN activities ON students.student_id = activities.log_student 
             WHERE student_id = ?
