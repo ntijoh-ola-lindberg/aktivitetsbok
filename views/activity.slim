@@ -3,12 +3,6 @@ nav
     p= "Inloggad som: #{@activity.get_username}"
     a id="logout-button" href='/logout' Logga ut
 
--if flash
-    -if flash[:saved] 
-	    p= flash[:saved]
-    -if flash[:loggedout]
-        p= flash[:loggedout]
-
 main
     fieldset id="log-activity"
         legend Logga aktivitet

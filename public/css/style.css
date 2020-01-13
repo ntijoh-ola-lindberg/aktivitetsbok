@@ -27,6 +27,12 @@ label {
     font-weight: 500;
 }
 
+#flash {
+    background-color: #48A882;
+    padding: 0.5em;
+    margin: 0.5em 0;
+}
+
 main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

@@ -5,4 +5,10 @@ html
         link rel="stylesheet" type="text/css" href="/css/style.css?#{Time.now.to_i}" 
         / disable css file caching
     body
+        -if flash
+            -if flash[:saved] 
+                p#flash= flash[:saved]
+            -if flash[:loggedout]
+                p#flash= flash[:loggedout]
+
         == yield
