@@ -89,7 +89,15 @@ nav p {
     font-size: 1.2em;
 }
 
-time,
+section.dates {
+    display: flex;
+    justify-content: space-between;
+}
+
+time.updated+time.original {
+    color: #0C7871;
+}
+
 textarea {
     display: block;
     width: 100%;

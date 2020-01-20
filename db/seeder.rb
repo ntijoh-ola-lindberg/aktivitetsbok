@@ -35,6 +35,7 @@ class Seeder
                 learned TEXT NOT NULL,
                 understood TEXT NOT NULL,
                 more TEXT NOT NULL,
+                updated_date TEXT,
                 FOREIGN KEY(log_student) REFERENCES students(student_id)
             )
         ")
@@ -55,15 +56,15 @@ class Seeder
 
     def self.populate_activities
         activities = [
-            {student_id: "1", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
-            {student_id: "2", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
-            {student_id: "3", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
-            {student_id: "4", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något"},
+            {student_id: "1", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2021-01-01 01:01:01"},
+            {student_id: "2", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2022-01-01 01:01:01"},
+            {student_id: "3", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2023-01-01 01:01:01"},
+            {student_id: "4", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2024-01-01 01:01:01"}
         ]
 
         activities.each do |activity|
-            db.execute("INSERT INTO activities (log_student, done, learned, understood, more) VALUES (?,?,?,?,?)", 
-                activity[:student_id], activity[:done], activity[:learned], activity[:understood], activity[:more]);
+            db.execute("INSERT INTO activities (log_student, done, learned, understood, more, updated_date) VALUES (?,?,?,?,?,?)", 
+                activity[:student_id], activity[:done], activity[:learned], activity[:understood], activity[:more], activity[:updated_date]);
         end
     end
 end

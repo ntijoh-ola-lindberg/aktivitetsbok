@@ -7,38 +7,49 @@ main
     fieldset id="log-activity"
         legend Logga aktivitet
         
-        form action="log-work" method="post" id="activity-log-form"
-            label(for="log-done") Vad har du gjort under lektionen?
-            textarea name="log-done" id="log-done" cols="60" rows="20"
-
-            label(for="log-learned") Vad har du lärt dig?
-            textarea name="log-learned" id="log-learned" cols="60" rows="20"
-
-            label(for="log-understood") Vad förstod du inte / vilka frågor har du inte fått svar på?
-            textarea name="log-understood" id="log-understood" cols="60" rows="20"
-
-            label(for="log-more") Vad vill du lära dig mer om?
-            textarea name="log-more" id="log-more" cols="60" rows="20"
-
-            button type="submit" Spara
+        == slim :part_activity_form
 
     section id="activity"
         h2 Din senaste aktivitet
 
         - for log in @log
-            article id=log['log_id']
-                time=log['log_date']
-                section
-                    h4 Vad har du gjort under lektionen?
-                    p==log['done']
-                section
-                    h4 Vad har du lärt dig?
-                    p==log['learned']
-                section
-                    h4 Vad förstod du inte / vilka frågor har du inte fått svar på?
-                    p==log['understood']
-                section
-                    h4 Vad vill du lära dig mer om?
-                    p==log['more']
-                a#edit-activity href="/?edit-activity&log-id=#{log['log_id']}" Ändra
+                article id=log['log_id']
+                    section.dates
+                        - if log['updated_date']
+                            time.updated=log['updated_date']
+                            time.original=log['log_date']
+                        - else
+                            time.original=log['log_date']
+                        
+                    - if log['log_id'] == @edit_log_id
+                        form action="update-log-work" method="post" id="update_activity-log-form"
+                            label(for="update_log-done") Vad har du gjort under lektionen?
+                            textarea name="log-done" id="update_log-done" #{log['done']}
+
+                            label(for="update_log-learned") Vad har du lärt dig?
+                            textarea name="log-learned" id="update_log-learned" #{log['learned']}
+
+                            label(for="update_log-understood") Vad förstod du inte / vilka frågor har du inte fått svar på?
+                            textarea name="log-understood" id="update_log-understood" #{log['understood']}
+
+                            label(for="update_log-more") Vad vill du lära dig mer om?
+                            textarea name="log-more" id="update_log-more" #{log['more']}
+
+                            input name="edit-log-id" type="hidden" value="#{@edit_log_id}"
+
+                            button type="submit" Uppdatera
+                    - else 
+                        section
+                            h4 Vad har du gjort under lektionen?
+                            p==log['done']
+                        section
+                            h4 Vad har du lärt dig?
+                            p==log['learned']
+                        section
+                            h4 Vad förstod du inte / vilka frågor har du inte fått svar på?
+                            p==log['understood']
+                        section
+                            h4 Vad vill du lära dig mer om?
+                            p==log['more']
+                        a.edit-activity href="/?editactivity&logid=#{log['log_id']}" Ändra
                 

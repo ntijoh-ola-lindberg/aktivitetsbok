@@ -24,11 +24,15 @@ class App < Sinatra::Base
         @greeting = Hi.new.get_random_greeting
         @log = @activity.all_activity
 
-        edit_activity = params["edit-activity"].to_s
-        log_id = params["log-id"].to_i
+        @edit_log_id = params["logid"].to_i
+        
+        if(params.has_key?(:editactivity) && @edit_log_id > 0 ) #edit post
+            #doit
+        end
 
         slim :activity        
     end
+
 
     get '/login' do
         slim :login
@@ -61,14 +65,23 @@ class App < Sinatra::Base
         @log_understood = params["log-understood"].to_s
         @log_more = params["log-more"].to_s
 
-        @activity.log_activity(@log_done, @log_learned, @log_understood, @log_more)
+        @activity.log_activity(@log_done, @log_learned, @log_understood, @log_more, nil)
 
         flash[:saved] = "Aktiviteten sparades"
         redirect back
     end
 
-    get '/edit-activity' do
-        log_id = params["log-id"].to_i
+    post '/update-log-work' do
+        @edit_log_id = params["edit-log-id"].to_i
+        @log_done = params["log-done"].to_s
+        @log_learned = params["log-learned"].to_s
+        @log_understood = params["log-understood"].to_s
+        @log_more = params["log-more"].to_s
+
+        @activity.update_activity(@edit_log_id, @log_done, @log_learned, @log_understood, @log_more)
+
+        flash[:saved] = "Aktiviteten uppdaterades"
+        redirect '/'
     end
 
 end
