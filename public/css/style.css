@@ -105,6 +105,9 @@ section.activity-footer a {
 textarea {
     display: block;
     width: 100%;
+    display: block; 
+    overflow: hidden; 
+    resize: none; 
 }
 
 fieldset,
