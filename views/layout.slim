@@ -14,4 +14,4 @@ html
                 p#flash= flash[:deleted_activity]
 
         == yield
-    script src="/js/script.js"
+    script src="/js/script.js?#{Time.now.to_i}"
