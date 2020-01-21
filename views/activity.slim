@@ -21,7 +21,7 @@ main
                         - else
                             time.original=log['log_date']
                         
-                    - if log['log_id'] == @edit_log_id
+                    - if log['log_id'] == @log_id
                         form action="update-log-work" method="post" id="update_activity-log-form"
                             label(for="update_log-done") Vad har du gjort under lektionen?
                             textarea name="log-done" id="update_log-done" #{log['done']}
@@ -35,7 +35,7 @@ main
                             label(for="update_log-more") Vad vill du lära dig mer om?
                             textarea name="log-more" id="update_log-more" #{log['more']}
 
-                            input name="edit-log-id" type="hidden" value="#{@edit_log_id}"
+                            input name="edit-log-id" type="hidden" value="#{@log_id}"
 
                             button type="submit" Uppdatera
                     - else 
@@ -51,5 +51,7 @@ main
                         section
                             h4 Vad vill du lära dig mer om?
                             p==log['more']
-                        a.edit-activity href="/?editactivity&logid=#{log['log_id']}" Ändra
+                        section.activity-footer
+                            a.edit-activity href="/?editactivity&logid=#{log['log_id']}" Ändra
+                            a.delete-activity href="/?deleteactivity&logid=#{log['log_id']}" Ta bort
                 

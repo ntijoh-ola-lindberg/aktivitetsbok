@@ -10,6 +10,8 @@ html
                 p#flash= flash[:saved]
             -if flash[:loggedout]
                 p#flash= flash[:loggedout]
+            -if flash[:deleted_activity]
+                p#flash= flash[:deleted_activity]
 
         == yield
     script src="/js/script.js"

@@ -98,6 +98,10 @@ time.updated+time.original {
     color: #0C7871;
 }
 
+section.activity-footer a {
+    margin-right: 0.4em;
+}
+
 textarea {
     display: block;
     width: 100%;

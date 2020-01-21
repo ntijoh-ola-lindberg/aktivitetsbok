@@ -11,10 +11,10 @@ class Activity
         @db.results_as_hash = true
 
         @all_activity = @db.execute("SELECT log_id, student_id, username, log_date, done, learned, understood, more, updated_date
-            FROM students 
-            INNER JOIN activities ON students.student_id = activities.log_student 
-            WHERE student_id = ?
-            ORDER BY log_date DESC", @userid)
+                                     FROM students 
+                                     INNER JOIN activities ON students.student_id = activities.log_student 
+                                     WHERE student_id = ?
+                                     ORDER BY log_date DESC", @userid)
     end
 
     def get_username 
@@ -33,9 +33,7 @@ class Activity
     end
 
     def update_activity(edit_log_id, log_done, log_learned, log_understood, log_more)
-
         t = DateTime.parse(Time.now.to_s).strftime("%Y-%m-%d %H:%M:%S")
-
         @db.execute("UPDATE activities
                      SET done = ?,
                          learned = ?,
@@ -44,5 +42,11 @@ class Activity
                          updated_date = ?
                      WHERE log_id = ?",
                      log_done, log_learned, log_understood, log_more, t, edit_log_id);
+    end
+
+    def delete_activity(log_id)
+        p log_id 
+        @db.execute("DELETE FROM activities
+                     WHERE log_id = ?", log_id);
     end
 end

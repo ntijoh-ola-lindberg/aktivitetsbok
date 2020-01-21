@@ -24,10 +24,17 @@ class App < Sinatra::Base
         @greeting = Hi.new.get_random_greeting
         @log = @activity.all_activity
 
-        @edit_log_id = params["logid"].to_i
-        
-        if(params.has_key?(:editactivity) && @edit_log_id > 0 ) #edit post
-            #doit
+        @log_id = params["logid"].to_i
+
+        if(params.has_key?(:editactivity) && @log_id > 0 ) #edit post
+            @log_id = params["logid"].to_i
+        end
+
+        if(params.has_key?(:deleteactivity) && @log_id > 0 ) #delete post
+            @log_id = params["logid"].to_i
+            @activity.delete_activity(@log_id)
+            flash[:deleted_activity] = "Aktiviteten togs bort"
+            redirect '/'
         end
 
         slim :activity        
