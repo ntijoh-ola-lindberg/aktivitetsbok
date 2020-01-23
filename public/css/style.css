@@ -6,9 +6,17 @@
 76B07A
 */
 
+:root {
+    --bg: #76B07A;
+    --bg-alt: #48A882;
+    --bg-alt-2: #219C85;
+    --text: #014152;
+    --link: #0C7871;
+}
+
 body {
-    background-color: #76B07A;
-    color: #014152;
+    background-color: var(--bg);
+    color: var(--text);
     font-weight: 100;
     font-family: serif;
     padding: 1em;
@@ -28,11 +36,11 @@ label {
 }
 
 a {
-    color: #0C7871;
+    color: var(--link);
 }
 
 #flash {
-    background-color: #48A882;
+    background-color: var(--bg-alt);
     padding: 0.5em;
     margin: 0.5em 0;
 }
@@ -70,11 +78,11 @@ nav p {
 }
 
 #activity article:nth-child(even) {
-    background-color: #48A882;
+    background-color: var(--bg-alt);
 }
 
 #activity article:nth-child(odd) {
-    background-color: #219C85;
+    background-color: var(--bg-alt-2);
 }
 
 #activity h4 {
@@ -95,7 +103,7 @@ section.dates {
 }
 
 time.updated+time.original {
-    color: #0C7871;
+    color: var(--link);
 }
 
 section.activity-footer a {
@@ -131,5 +139,3 @@ legend {
 pre {
     white-space: pre-wrap;
 }
-
-´
