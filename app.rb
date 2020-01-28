@@ -1,8 +1,8 @@
 require 'byebug'
 require 'rack-flash'
-require './model/hi.rb'
-require './model/activity.rb'
-require './model/student.rb'
+require_relative 'model/hi.rb'
+require_relative 'model/activity.rb'
+require_relative 'model/student.rb'
 
 class App < Sinatra::Base
 
