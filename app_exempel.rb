@@ -8,7 +8,7 @@ require './model/logg.rb'
 class AppController < Sinatra::Base
 
     before do
-        @anvandare = Student.logga_in( 1, 'aoeu' )
+        @anvandare = Anvandare.logga_in( 1, 'aoe' )
     end
 
     get '/' do
