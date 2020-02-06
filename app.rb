@@ -3,6 +3,7 @@ require 'rack-flash'
 require_relative 'model/hi.rb'
 require_relative 'model/activity.rb'
 require_relative 'model/student.rb'
+require_relative 'db_handler.rb'
 
 class App < Sinatra::Base
 
@@ -10,8 +11,10 @@ class App < Sinatra::Base
     use Rack::Flash
 
     before do
+
+        @dbhandler = DbHandler.new 
+
         @current_user = Student.get_by_id(session[:studentid])
-        @activity = Activity.new(session[:studentid])
 
         if request.get? && request.path != "/login"
             unless @current_user
@@ -22,6 +25,8 @@ class App < Sinatra::Base
 
     get '/' do
         @greeting = Hi.new.get_random_greeting
+        
+        @activity = Activity.new(session[:studentid], @dbhandler)
         @log = @activity.all_activity
 
         @log_id = params["logid"].to_i
