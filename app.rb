@@ -14,12 +14,14 @@ class App < Sinatra::Base
 
         @dbhandler = DbHandler.new 
 
-        @current_user = Student.get_by_id(session[:studentid])
+        @current_user = @dbhandler.get_by_id(session[:user_id])
 
-        if request.get? && request.path != "/login"
-            unless @current_user
-                redirect '/login'
-            end
+        #@current_u = User.new(@dbhandler)
+        #@current_u.login(session[:studentid])
+        #@current_user = Student.get_by_id(session[:studentid])
+
+        if request.get? && request.path != "/login" && !@current_user
+            redirect '/login'
         end
     end
 
@@ -60,11 +62,10 @@ class App < Sinatra::Base
         username = params["username"].to_s
         password_nothashed = params["password"].to_s
 
-        student = Student.login(username, password_nothashed)
+        user =  @dbhandler.login(username, password_nothashed)
         
-        if student
-            session[:studentid] = student.id
-            
+        if user
+            session[:user_id] = user.id
             redirect '/'
         else
             redirect '/login'
