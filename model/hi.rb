@@ -1,6 +1,6 @@
 class Hi 
 
-    def get_random_greeting
+    def self.get_random_greeting
         
         @greetings = [
             "Hej",
