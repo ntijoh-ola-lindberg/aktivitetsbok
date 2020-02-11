@@ -1,4 +1,4 @@
-require 'sqlite3'
+require_relative '../db_handler.rb'
 
 class User
 

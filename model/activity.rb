@@ -1,5 +1,5 @@
-require 'sqlite3'
 require 'date'
+require_relative '../db_handler.rb'
 
 class Activity 
     
@@ -7,7 +7,7 @@ class Activity
 
     def initialize (userid, dbhandler)
         @userid = userid
-        @dbhandler = dbhandler
+        @dbhandler = dbhandler 
 
         @all_activity = @dbhandler.db.execute("SELECT log_id, student_id, username, log_date, done, learned, understood, more, updated_date
                                      FROM students 
@@ -20,7 +20,7 @@ class Activity
         return @all_activity.first["username"]
     end
 
-    def log_activity(log_done, log_learned, log_understood, log_more, log_updated_date)
+    def log_activity(log_done, log_learned, log_understood, log_more)
         @dbhandler.db.execute("INSERT INTO activities 
                             (log_student, 
                              done, 
