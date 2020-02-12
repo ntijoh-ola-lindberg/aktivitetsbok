@@ -21,7 +21,10 @@ class App < Sinatra::Base
             redirect '/login'
         end
 
-        @activity = Activity.new(session[:user_id], @db_handler)
+        #@activity = Activity.new(@db_handler, session[:user_id])
+
+       @activities = Activity.activity_factory(@db_handler, session[:user_id])
+
     end
 
     get '/login' do
@@ -51,7 +54,7 @@ class App < Sinatra::Base
     get '/' do
         @greeting = Hi.get_random_greeting
         
-        @log = @activity.all_activity
+        #@log = @activity.all_activity
 
         @log_id = params["logid"].to_i
 
