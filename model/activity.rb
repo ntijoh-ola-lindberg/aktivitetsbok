@@ -13,13 +13,13 @@ class Activity
                 :more, 
                 :updated_date
 
-    def initialize (dbhandler, userid, log_id=nil, username=nil, log_date=nil, done=nil, learned=nil, understood=nil, more=nil, updated_date=nil)
+    def initialize (dbhandler, user_id, activity_id=nil, username=nil, date=nil, done=nil, learned=nil, understood=nil, more=nil, updated_date=nil)
         @dbhandler = dbhandler 
 
-        @user_id = userid
-        @activity_id = log_id
+        @user_id = user_id
+        @activity_id = activity_id
         @username = username
-        @date = log_date
+        @date = date
         @done = done
         @learned = learned
         @understood = understood
@@ -27,32 +27,35 @@ class Activity
         @updated_date = updated_date
     end
 
-    def self.log_activity(dbhandler, userid, log_done, log_learned, log_understood, log_more)
-        dbhandler.db.execute("INSERT INTO activities (log_student, 
+    def log_activity()
+        @dbhandler.db.execute("INSERT INTO activities (log_student, 
                                                       done, 
                                                       learned, 
                                                       understood, 
                                                       more) 
                               VALUES (?, ?, ?, ?, ?)", 
-                                userid, log_done, log_learned, log_understood, log_more);
+                                @user_id, @done, @learned, @understood, @more);
     end
-
-    def self.update_activity(dbhandler, edit_log_id, log_done, log_learned, log_understood, log_more)
+    
+    def update_activity(done_updated, learned_updated, understood_updated, more_updated)
         t = DateTime.parse(Time.now.to_s).strftime("%Y-%m-%d %H:%M:%S")
-        dbhandler.db.execute("UPDATE activities
+        @dbhandler.db.execute("UPDATE activities
                     SET done = ?,
                         learned = ?,
                         understood = ?,
                         more = ?,
                         updated_date = ?
                     WHERE log_id = ?", 
-                    log_done, log_learned, log_understood, log_more, t, edit_log_id);
+                    done_updated, learned_updated, understood_updated, more_updated, t, @activity_id);
     end
 
     def self.delete_activity(dbhandler, log_id)
         dbhandler.db.execute("DELETE FROM activities
                      WHERE log_id = ?", log_id);
     end
+
+    # Static methods below 
+    # TODO move to general factory
 
     def self.get_all_activities_for_userid(dbhandler, userid)
         all_activities_for_user_hash = dbhandler.db.execute("SELECT log_id, student_id, username, log_date, done, learned, understood, more, updated_date
@@ -78,5 +81,30 @@ class Activity
 
         return all_activities_for_user
     end
-    
+
+    def self.get_activity_from_id(dbhandler, activity_id) 
+        a_hash = dbhandler.db.execute("SELECT * 
+                                FROM activities
+                                WHERE log_id = ?", 
+                                activity_id)
+
+        if (!a_hash.nil? && !a_hash.first['log_id'].nil?)
+            a = Activity.new(
+                dbhandler, 
+                a_hash.first['log_student'].to_i,
+                a_hash.first['log_id'].to_i,
+                a_hash.first['username'].to_s,
+                a_hash.first['log_date'].to_s,
+                a_hash.first['done'].to_s,
+                a_hash.first['learned'].to_s,
+                a_hash.first['understood'].to_s,
+                a_hash.first['more'].to_s,
+                a_hash.first['updated_date'].to_s)
+
+            return a
+        end
+
+        return false
+    end
+
 end

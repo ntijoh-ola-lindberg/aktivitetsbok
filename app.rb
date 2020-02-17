@@ -55,12 +55,7 @@ class App < Sinatra::Base
         #todo: replace with crud pattern - now using @log_id to know what activity to edit / delete
         @log_id = params["logid"].to_i
 
-        if(params.has_key?(:editactivity) && @log_id > 0 ) #edit post
-            @log_id = params["logid"].to_i
-        end
-
         if(params.has_key?(:deleteactivity) && @log_id > 0 ) #delete post
-            @log_id = params["logid"].to_i
             Activity.delete_activity(@db_handler, @log_id)
             flash[:deleted_activity] = "Aktiviteten togs bort"
             redirect '/'
@@ -70,27 +65,37 @@ class App < Sinatra::Base
     end
 
     post '/log-work' do
-        @log_done = params["log-done"].to_s
-        @log_learned = params["log-learned"].to_s
-        @log_understood = params["log-understood"].to_s
-        @log_more = params["log-more"].to_s
+        log_done = params["log-done"].to_s
+        log_learned = params["log-learned"].to_s
+        log_understood = params["log-understood"].to_s
+        log_more = params["log-more"].to_s
 
-        Activity.log_activity(@db_handler, @current_user.id, @log_done, @log_learned, @log_understood, @log_more)
+        a = Activity.new(@db_handler, @current_user.id, nil, nil, nil, log_done, log_learned, log_understood, log_more, nil)
+        a.log_activity()
 
         flash[:saved] = "Aktiviteten sparades"
         redirect back
     end
 
     post '/update-log-work' do
-        @edit_log_id = params["edit-log-id"].to_i
-        @log_done = params["log-done"].to_s
-        @log_learned = params["log-learned"].to_s
-        @log_understood = params["log-understood"].to_s
-        @log_more = params["log-more"].to_s
+        edit_log_id = params["edit-log-id"].to_i
+        done_updated = params["log-done"].to_s
+        learned_updated = params["log-learned"].to_s
+        understood_updated = params["log-understood"].to_s
+        more_updated = params["log-more"].to_s
 
-        Activity.update_activity(@db_handler, @edit_log_id, @log_done, @log_learned, @log_understood, @log_more)
+        #todo: tried to use detect but couldnt
+        #@activity = @activities.detect { |a| a.activity_id = edit_log_id }
 
-        flash[:saved] = "Aktiviteten uppdaterades"
+        #todo: move to general find method - will need exactly the same for delete
+        @activities.each do |act|
+            if(act.activity_id == edit_log_id)
+                act.update_activity(done_updated, learned_updated, understood_updated, more_updated)
+                flash[:saved] = "Aktiviteten uppdaterades"
+            end
+        end
+
+        flash[:saved] = "Ingen aktivitet uppdaterades"
         redirect '/'
     end
 
