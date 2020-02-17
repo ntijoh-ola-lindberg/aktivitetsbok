@@ -2,11 +2,12 @@ require_relative 'model/student.rb'
 require_relative 'db_handler.rb'
 
 class LoginHandler 
+
     def initialize(db_handler)
         @db_handler = db_handler
     end
 
-    def get_by_id(user_id)
+    def get_user_by_id(user_id)
         user = @db_handler.db.execute("SELECT student_id, username, password_hash
             FROM students 
             WHERE student_id = ?", 
@@ -46,4 +47,5 @@ class LoginHandler
             return Student.new(id, username, password_hash, @db_handler)
         end
     end
+
 end

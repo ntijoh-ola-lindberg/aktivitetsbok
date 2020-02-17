@@ -1,6 +1,6 @@
 h1 id="greeting" = "#{@greeting}!"
 nav
-    p= "Inloggad som: #{@activity.get_username}"
+    p= "Inloggad som: #{@current_user.username}"
     a id="logout-button" href='/logout' Logga ut
 
 main
@@ -12,28 +12,28 @@ main
     section id="activity"
         h2 Din senaste aktivitet
 
-        - for log in @log
-                article id=log['log_id']
+        - for activity in @activities
+                article id=activity.activity_id
                     section.dates
-                        - if log['updated_date']
-                            time.updated=log['updated_date']
-                            time.original=log['log_date']
+                        - if activity.updated_date
+                            time.updated=activity.updated_date
+                            time.original=activity.date
                         - else
-                            time.original=log['log_date']
+                            time.original=activity.date
                         
-                    - if log['log_id'] == @log_id
+                    - if activity.activity_id == @log_id
                         form action="update-log-work" method="post" id="update_activity-log-form"
                             label(for="update_log-done") Vad har du gjort under lektionen?
-                            textarea name="log-done" id="update_log-done" #{log['done']}
+                            textarea name="log-done" id="update_log-done" #{activity.done}
 
                             label(for="update_log-learned") Vad har du lärt dig?
-                            textarea name="log-learned" id="update_log-learned" #{log['learned']}
+                            textarea name="log-learned" id="update_log-learned" #{activity.learned}
 
                             label(for="update_log-understood") Vad förstod du inte / vilka frågor har du inte fått svar på?
-                            textarea name="log-understood" id="update_log-understood" #{log['understood']}
+                            textarea name="log-understood" id="update_log-understood" #{activity.understood}
 
                             label(for="update_log-more") Vad vill du lära dig mer om?
-                            textarea name="log-more" id="update_log-more" #{log['more']}
+                            textarea name="log-more" id="update_log-more" #{activity.more}
 
                             input name="edit-log-id" type="hidden" value="#{@log_id}"
 
@@ -41,17 +41,17 @@ main
                     - else 
                         section
                             h4 Vad har du gjort under lektionen?
-                            p==log['done']
+                            p==activity.done
                         section
                             h4 Vad har du lärt dig?
-                            p==log['learned']
+                            p==activity.learned
                         section
                             h4 Vad förstod du inte / vilka frågor har du inte fått svar på?
-                            p==log['understood']
+                            p==activity.understood
                         section
                             h4 Vad vill du lära dig mer om?
-                            p==log['more']
+                            p==activity.more
                         section.activity-footer
-                            a.edit-activity href="/?editactivity&logid=#{log['log_id']}" Ändra
-                            a.delete-activity href="/?deleteactivity&logid=#{log['log_id']}" Ta bort
+                            a.edit-activity href="/?editactivity&logid=#{activity.activity_id}" Ändra
+                            a.delete-activity href="/?deleteactivity&logid=#{activity.activity_id}" Ta bort
                 
