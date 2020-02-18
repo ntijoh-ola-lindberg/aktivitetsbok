@@ -84,16 +84,8 @@ class App < Sinatra::Base
         understood_updated = params["log-understood"].to_s
         more_updated = params["log-more"].to_s
 
-        #todo: tried to use detect but couldnt
-        #@activity = @activities.detect { |a| a.activity_id = edit_log_id }
-
-        #todo: move to general find method - will need exactly the same for delete
-        @activities.each do |act|
-            if(act.activity_id == edit_log_id)
-                act.update_activity(done_updated, learned_updated, understood_updated, more_updated)
-                flash[:saved] = "Aktiviteten uppdaterades"
-            end
-        end
+        @actv = @activities.detect { |a| a.activity_id == edit_log_id }        
+        @actv.update_activity(done_updated, learned_updated, understood_updated, more_updated)
 
         flash[:saved] = "Ingen aktivitet uppdaterades"
         redirect '/'
