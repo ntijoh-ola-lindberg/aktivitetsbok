@@ -7,51 +7,70 @@ main
     fieldset id="log-activity"
         legend Logga aktivitet
         
-        == slim :part_activity_form
+        form action="activity/log" method="post"
+            <label>Vad har du gjort under lektionen?
+                textarea name="done"
+            </label>
+
+            <label>Vad har du lärt dig?
+                textarea name="learned"
+            </label>
+
+            <label>Vad förstod du inte / vilka frågor har du inte fått svar på?
+                textarea name="understood"
+            </label>
+
+            <label>Vad vill du lära dig mer om?
+                textarea name="more"
+            </label>
+
+            button type="submit" Spara
 
     section id="activity"
         h2 Din senaste aktivitet
 
-        - for activity in @activities
-                article id=activity.activity_id
+        - for @act in @activities
+                article id=@act.activity_id
                     section.dates
-                        - if activity.updated_date
-                            time.updated=activity.updated_date
-                            time.original=activity.date
+                        - if @act.updated_date
+                            time.updated=@act.updated_date
+                            time.original=@act.date
                         - else
-                            time.original=activity.date
+                            time.original=@act.date
                         
-                    - if activity.activity_id == @log_id
-                        form action="update-log-work" method="post" id="update_activity-log-form"
-                            label(for="update_log-done") Vad har du gjort under lektionen?
-                            textarea name="log-done" id="update_log-done" #{activity.done}
+                    - if @act.activity_id == @log_id
+                        form action="/activity/edit/#{@log_id}" method="post"
+                            <label>Vad har du gjort under lektionen?
+                                textarea name="done" #{@act.done}
+                            </label>
 
-                            label(for="update_log-learned") Vad har du lärt dig?
-                            textarea name="log-learned" id="update_log-learned" #{activity.learned}
+                            <label>Vad har du lärt dig?
+                                textarea name="learned" #{@act.learned}
+                            </label>
 
-                            label(for="update_log-understood") Vad förstod du inte / vilka frågor har du inte fått svar på?
-                            textarea name="log-understood" id="update_log-understood" #{activity.understood}
+                            <label>Vad förstod du inte / vilka frågor har du inte fått svar på?
+                                textarea name="understood" #{@act.understood}
+                            </label>
 
-                            label(for="update_log-more") Vad vill du lära dig mer om?
-                            textarea name="log-more" id="update_log-more" #{activity.more}
-
-                            input name="edit-log-id" type="hidden" value="#{@log_id}"
+                            <label>Vad vill du lära dig mer om?
+                                textarea name="more" #{@act.more}
+                            </label>
 
                             button type="submit" Uppdatera
                     - else 
                         section
                             h4 Vad har du gjort under lektionen?
-                            p==activity.done
+                            p==@act.done
                         section
                             h4 Vad har du lärt dig?
-                            p==activity.learned
+                            p==@act.learned
                         section
                             h4 Vad förstod du inte / vilka frågor har du inte fått svar på?
-                            p==activity.understood
+                            p==@act.understood
                         section
                             h4 Vad vill du lära dig mer om?
-                            p==activity.more
+                            p==@act.more
                         section.activity-footer
-                            a.edit-activity href="/?editactivity&logid=#{activity.activity_id}" Ändra
-                            a.delete-activity href="/?deleteactivity&logid=#{activity.activity_id}" Ta bort
+                            a.edit-activity href="/?editactivity&logid=#{@act.activity_id}" Ändra
+                            a.delete-activity href="/?deleteactivity&logid=#{@act.activity_id}" Ta bort
                 

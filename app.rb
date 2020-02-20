@@ -64,25 +64,25 @@ class App < Sinatra::Base
         slim :activity        
     end
 
-    post '/log-work' do
-        log_done = params["log-done"].to_s
-        log_learned = params["log-learned"].to_s
-        log_understood = params["log-understood"].to_s
-        log_more = params["log-more"].to_s
+    post '/activity/log' do
+        done = params["done"].to_s
+        learned = params["learned"].to_s
+        understood = params["understood"].to_s
+        more = params["more"].to_s
 
-        a = Activity.new(@db_handler, @current_user.id, nil, nil, nil, log_done, log_learned, log_understood, log_more, nil)
+        a = Activity.new(@db_handler, @current_user.id, nil, nil, nil, done, learned, understood, more, nil)
         a.log_activity()
 
         flash[:saved] = "Aktiviteten sparades"
         redirect back
     end
 
-    post '/update-log-work' do
-        edit_log_id = params["edit-log-id"].to_i
-        done_updated = params["log-done"].to_s
-        learned_updated = params["log-learned"].to_s
-        understood_updated = params["log-understood"].to_s
-        more_updated = params["log-more"].to_s
+    post '/activity/edit/:id' do
+        edit_log_id = params[:id].to_i
+        done_updated = params["done"].to_s
+        learned_updated = params["learned"].to_s
+        understood_updated = params["understood"].to_s
+        more_updated = params["more"].to_s
 
         @actv = @activities.detect { |a| a.activity_id == edit_log_id }        
         @actv.update_activity(done_updated, learned_updated, understood_updated, more_updated)
