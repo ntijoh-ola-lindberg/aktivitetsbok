@@ -98,7 +98,12 @@ time.updated+time.original {
     color: var(--link);
 }
 
-section.activity-footer a {
+section.activity-footer{
+    display: flex;
+    align-items: baseline;
+}
+
+section.activity-footer>* {
     margin-right: 0.4em;
 }
 
