@@ -52,11 +52,14 @@ class App < Sinatra::Base
     get '/' do
         @greeting = Hi.get_random_greeting
 
-        #todo: replace with crud pattern - now using @log_id to know what activity to edit / delete
         @log_id = params["logid"].to_i
 
         if(params.has_key?(:deleteactivity) && @log_id > 0 ) #delete post
             Activity.delete_activity(@db_handler, @log_id)
+
+            @actv = @activities.detect { |a| a.activity_id == @log_id }
+            @actv.delete()
+
             flash[:deleted_activity] = "Aktiviteten togs bort"
             redirect '/'
         end
@@ -84,7 +87,7 @@ class App < Sinatra::Base
         understood_updated = params["understood"].to_s
         more_updated = params["more"].to_s
 
-        @actv = @activities.detect { |a| a.activity_id == edit_log_id }        
+        @actv = @activities.detect { |a| a.activity_id == edit_log_id }
         @actv.update_activity(done_updated, learned_updated, understood_updated, more_updated)
 
         flash[:saved] = "Ingen aktivitet uppdaterades"
