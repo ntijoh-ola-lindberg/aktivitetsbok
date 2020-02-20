@@ -74,5 +74,6 @@ main
                             p==@act.more
                         section.activity-footer
                             a.edit-activity href="/?editactivity&logid=#{@act.activity_id}" Ändra
-                            a.delete-activity href="/?deleteactivity&logid=#{@act.activity_id}" Ta bort
+                            form action="/activity/delete/#{@act.activity_id}" method="post"
+                                button type="submit" Ta bort
                 

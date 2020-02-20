@@ -49,13 +49,11 @@ class Activity
                     done_updated, learned_updated, understood_updated, more_updated, t, @activity_id);
     end
 
-    def self.delete_activity(dbhandler, log_id)
-        dbhandler.db.execute("DELETE FROM activities
-                     WHERE log_id = ?", log_id);
+    def delete_activity()
+        @dbhandler.db.execute("DELETE FROM activities
+                     WHERE log_id = ?", @activity_id);
     end
 
-    # Static methods below 
-    # TODO move to general factory
 
     def self.get_all_activities_for_userid(dbhandler, userid)
         all_activities_for_user_hash = dbhandler.db.execute("SELECT log_id, student_id, username, log_date, done, learned, understood, more, updated_date
