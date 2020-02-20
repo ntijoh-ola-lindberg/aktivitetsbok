@@ -9,12 +9,16 @@ class ActivityLogSpec < Minitest::Spec
     :alpha #run the tests in this file in order
   end
 
+  # Sleeps are to make sure the page has loaded before we continue
+  # Also so we can se what's happening
+
   before do
     visit '/'
     within("#login-form") do
       fill_in('username', with: "apple@frukt.se")
       fill_in('password', with: "123")
       click_button 'Logga in'
+      sleep 1
     end
   end
 
@@ -27,49 +31,32 @@ class ActivityLogSpec < Minitest::Spec
   end
 
   it 'write text in 4 textareas' do
-    @time = Time.now #to get a unique string
+
+    time = Time.now.to_s #to get a unique string
+
+    @done = "Test fill: Lorem ipsum dolor sit amet: " << time
+    @learned = "Test fill: Consectetur adipiscing elit: " << time
+    @understood = "Test fill: Nam iaculis felis at lacus efficitur: " << time
+    @more = "Test fill: A tempor urna lacinia: " << time
+
     within("#activity-log-form") do 
-      fill_in('log-done', with: "Test fill: Lorem ipsum dolor sit amet: #{@time}" )
-      fill_in('log-learned', with: "Test fill: Consectetur adipiscing elit: #{@time}" )
-      fill_in('log-understood', with: "Test fill: Nam iaculis felis at lacus efficitur: #{@time}" )
-      fill_in('log-more', with: "Test fill: A tempor urna lacinia: #{@time}" )
+      sleep 1
+      fill_in 'done', with: @done
+      sleep 1
+      fill_in 'learned', with: @learned
+      sleep 1
+      fill_in 'understood', with: @understood
+      sleep 1
+      fill_in 'more', with: @more
+      sleep 1
       click_button 'Spara'
+      sleep 1
     end
 
-    sleep 2
-
-    within("#activity") do
-      _(page).must_have_content("Test fill: Lorem ipsum dolor sit amet: #{@time}")
-      _(page).must_have_content("Test fill: Consectetur adipiscing elit: #{@time}")
-      _(page).must_have_content("Test fill : Nam iaculis felis at lacus efficitur: #{@time}")
-      _(page).must_have_content("Test fill: A tempor urna lacinia: #{@time}")
-    end
-
-  end
-
-  it 'update one activity' do
-    @time = Time.now #to get a unique string
-
-    first('a.edit-activity').click
-
-    sleep 2
-
-    within("#update_activity-log-form") do 
-      fill_in('update_log-done', with: "Test update: Lorem ipsum dolor sit amet: #{@time}" )
-      fill_in('update_log-learned', with: "Test update: Consectetur adipiscing elit: #{@time}" )
-      fill_in('update_log-understood', with: "Test update: Nam iaculis felis at lacus efficitur: #{@time}" )
-      fill_in('update_log-more', with: "Test update: A tempor urna lacinia: #{@time}" )
-      click_button 'Uppdatera'
-    end
-
-    sleep 2
-
-    within("#activity") do
-      _(page).must_have_content("Test update: Lorem ipsum dolor sit amet: #{@time}")
-      _(page).must_have_content("Test update: Consectetur adipiscing elit: #{@time}")
-      _(page).must_have_content("Test update: Nam iaculis felis at lacus efficitur: #{@time}")
-      _(page).must_have_content("Test update: A tempor urna lacinia: #{@time}")
-    end
+    _(page).must_have_content(@done)
+    _(page).must_have_content(@learned)
+    _(page).must_have_content(@understood)
+    _(page).must_have_content(@more)
 
   end
 
