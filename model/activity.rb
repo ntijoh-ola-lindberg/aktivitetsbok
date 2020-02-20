@@ -82,29 +82,4 @@ class Activity
         return all_activities_for_user
     end
 
-    def self.get_activity_from_id(dbhandler, activity_id) 
-        a_hash = dbhandler.db.execute("SELECT * 
-                                FROM activities
-                                WHERE log_id = ?", 
-                                activity_id)
-
-        if (!a_hash.nil? && !a_hash.first['log_id'].nil?)
-            a = Activity.new(
-                dbhandler, 
-                a_hash.first['log_student'].to_i,
-                a_hash.first['log_id'].to_i,
-                a_hash.first['username'].to_s,
-                a_hash.first['log_date'].to_s,
-                a_hash.first['done'].to_s,
-                a_hash.first['learned'].to_s,
-                a_hash.first['understood'].to_s,
-                a_hash.first['more'].to_s,
-                a_hash.first['updated_date'].to_s)
-
-            return a
-        end
-
-        return false
-    end
-
 end
