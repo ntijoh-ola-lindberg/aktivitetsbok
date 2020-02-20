@@ -80,7 +80,7 @@ class App < Sinatra::Base
         @actv = @activities.detect { |a| a.activity_id == edit_log_id }
         @actv.update_activity(done_updated, learned_updated, understood_updated, more_updated)
 
-        flash[:saved] = "Ingen aktivitet uppdaterades"
+        flash[:saved] = "Aktiviteten uppdaterades"
         redirect '/'
     end
 
