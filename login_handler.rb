@@ -44,6 +44,8 @@ class LoginHandler
         password_hash = BCrypt::Password.new(db_password_hashed)
 
         if password_hash == password_nothashed
+            # todo: check if student or teacher: if user["is_student"] 
+            #       and create Student or Teacher objects
             return Student.new(id, username, password_hash, @db_handler)
         end
     end
