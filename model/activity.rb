@@ -64,17 +64,20 @@ class Activity
 
         all_activities_for_user = []
         all_activities_for_user_hash.each { |activity| 
-            all_activities_for_user.push(Activity.new(
-                dbhandler, 
-                activity['student_id'],
-                activity['log_id'],
-                activity['username'],
-                activity['log_date'],
-                activity['done'],
-                activity['learned'],
-                activity['understood'],
-                activity['more'],
-                activity['updated_date'])) 
+            all_activities_for_user.push(
+                Activity.new(
+                    dbhandler, 
+                    activity['student_id'],
+                    activity['log_id'],
+                    activity['username'],
+                    activity['log_date'],
+                    activity['done'],
+                    activity['learned'],
+                    activity['understood'],
+                    activity['more'],
+                    activity['updated_date']
+                )
+            ) 
         }
 
         return all_activities_for_user
