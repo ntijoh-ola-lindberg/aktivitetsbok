@@ -1,11 +1,12 @@
 fieldset
 legend Logga in
 
-form action="do-login" method="post" id="login-form"
+form action="do-login" method="post" id="login-form" class="#{'login-error' if flash[:failedlogin_anv_losenord]}"
+
     label(for="username") Användarnamn (e-post)
-    input name="username" id="username" value="apple@frukt.se"
+    input name="username" id="username" required="" value="apple@frukt.se"
     
     label(for="password") Lösenord
-    input name="password" id="password"  type="password" value="123"
+    input name="password" id="password" required="" type="password" value="123"
 
-    button type="submit" Logga in
+    button type="submit"autofocus="" Logga in

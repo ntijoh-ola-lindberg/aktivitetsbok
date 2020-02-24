@@ -32,13 +32,14 @@ class App < Sinatra::Base
     post '/do-login' do
         username = params["username"].to_s
         password_nothashed = params["password"].to_s
-
+        
         user =  @login_handler.login(username, password_nothashed)
 
         if user
             session[:user_id] = user.id
             redirect '/'
         else
+            flash[:failedlogin_anv_losenord] = "Inloggningen misslyckades. Lösenord och / eller användarnamn är ej rätt."
             redirect '/login'
         end
     end

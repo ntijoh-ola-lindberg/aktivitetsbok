@@ -98,7 +98,7 @@ time.updated+time.original {
     color: var(--link);
 }
 
-section.activity-footer{
+section.activity-footer {
     display: flex;
     align-items: baseline;
 }
@@ -110,9 +110,9 @@ section.activity-footer>* {
 textarea {
     display: block;
     width: 100%;
-    display: block; 
-    overflow: hidden; 
-    resize: none; 
+    display: block;
+    overflow: hidden;
+    resize: none;
 }
 
 fieldset,
@@ -131,6 +131,10 @@ button {
 button,
 legend {
     font-size: 1.5em;
+}
+
+form.login-error input {
+    border: 1px solid red;
 }
 
 pre {
