@@ -1,6 +1,10 @@
 source "https://rubygems.org"
 
-#To install required bundles use: bundle install
+# To install Ruby
+# brew install ruby ruby-install
+# ruby-install ruby 2.6.3
+
+# To install required bundles use: bundle install
 # brew cask install chromedriver
 
 gem "sinatra"
