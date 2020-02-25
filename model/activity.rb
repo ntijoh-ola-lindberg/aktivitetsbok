@@ -56,10 +56,10 @@ class Activity
 
 
     def self.get_all_activities_for_userid(dbhandler, userid)
-        all_activities_for_user_hash = dbhandler.db.execute("SELECT log_id, student_id, username, log_date, done, learned, understood, more, updated_date
-            FROM students 
-            INNER JOIN activities ON students.student_id = activities.log_student 
-            WHERE student_id = ?
+        all_activities_for_user_hash = dbhandler.db.execute("SELECT log_id, id, username, log_date, done, learned, understood, more, updated_date
+            FROM users 
+            INNER JOIN activities ON users.id = activities.log_student 
+            WHERE users.id = ?
             ORDER BY log_date DESC", userid)
 
         all_activities_for_user = []
@@ -67,7 +67,7 @@ class Activity
             all_activities_for_user.push(
                 Activity.new(
                     dbhandler, 
-                    activity['student_id'],
+                    activity['id'],
                     activity['log_id'],
                     activity['username'],
                     activity['log_date'],

@@ -8,16 +8,16 @@ class LoginHandler
     end
 
     def get_user_by_id(user_id)
-        user = @db_handler.db.execute("SELECT student_id, username, password_hash
-            FROM students 
-            WHERE student_id = ?", 
+        user = @db_handler.db.execute("SELECT id, username, password_hash
+            FROM users 
+            WHERE id = ?", 
             user_id).first
 
         unless user
             return false
         end
 
-        id = user["student_id"].to_i
+        id = user["id"].to_i
         username = user["username"].to_s
         password_hashed = user["password_hash"].to_s
 
@@ -28,8 +28,8 @@ class LoginHandler
     end
 
     def login(username, password_nothashed)
-        user = @db_handler.db.execute("SELECT student_id, username, password_hash
-            FROM students 
+        user = @db_handler.db.execute("SELECT id, username, password_hash
+            FROM users 
             WHERE username = ?", 
             username).first
         
@@ -37,7 +37,7 @@ class LoginHandler
             return false
         end
 
-        id = user["student_id"].to_i
+        id = user["id"].to_i
         username = user["username"].to_s
         db_password_hashed = user["password_hash"].to_s
         
