@@ -45,7 +45,7 @@ class Activity
                         understood = ?,
                         more = ?,
                         date_updated = ?
-                    WHERE log_id = ?", 
+                    WHERE activities.id = ?", 
                     done_updated, learned_updated, understood_updated, more_updated, t, @activity_id);
     end
 
@@ -56,10 +56,10 @@ class Activity
 
 
     def self.get_all_activities_for_userid(dbhandler, userid)
-        all_activities_for_user_hash = dbhandler.db.execute("SELECT activities.id, users.id, username, date, done, learned, understood, more, date_updated
+        all_activities_for_user_hash = dbhandler.db.execute("SELECT users.id as u_id, users.username, activities.id as a_id, activities.date, activities.date_updated, activities.done, activities.learned, activities.understood, activities.more 
             FROM users 
-            INNER JOIN activities ON users.id = activities.user_id 
-            WHERE users.id = ?
+            INNER JOIN activities ON u_id = activities.user_id 
+            WHERE u_id = ?
             ORDER BY date DESC", userid)
 
         all_activities_for_user = []
@@ -67,8 +67,8 @@ class Activity
             all_activities_for_user.push(
                 Activity.new(
                     dbhandler, 
-                    activity['activities.id'],
-                    activity['users.id'],
+                    activity['u_id'],
+                    activity['a_id'],
                     activity['username'],
                     activity['date'],
                     activity['done'],
