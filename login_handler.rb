@@ -53,9 +53,9 @@ class LoginHandler
     # 2 = studend
     def get_role(role, id, username, password_hash)
         if role == 1
-            return Teacher.new(id, username, password_hash, @db_handler)
+            return Teacher.new(id, username, password_hash, @db_handler, true)
         elseif role == 2
-            return Student.new(id, username, password_hash, @db_handler)
+            return Student.new(id, username, password_hash, @db_handler, false)
         else 
             return false
         end        

@@ -6,7 +6,11 @@ require_relative 'model/hi.rb'
 require_relative 'model/activity.rb'
 require_relative 'model/student.rb'
 
+require "sinatra"
+require "sinatra/namespace"
+
 class App < Sinatra::Base
+    register Sinatra::Namespace
 
     enable :sessions
     use Rack::Flash
@@ -58,40 +62,50 @@ class App < Sinatra::Base
         slim :activity        
     end
 
-    post '/activity/log' do
-        done = params["done"].to_s
-        learned = params["learned"].to_s
-        understood = params["understood"].to_s
-        more = params["more"].to_s
+    namespace '/activity' do
 
-        a = Activity.new(@db_handler, @current_user.id, nil, nil, nil, done, learned, understood, more, nil)
-        a.log_activity()
+        post '/log' do
+            done = params["done"].to_s
+            learned = params["learned"].to_s
+            understood = params["understood"].to_s
+            more = params["more"].to_s
 
-        flash[:saved] = "Aktiviteten sparades"
-        redirect back
+            a = Activity.new(@db_handler, @current_user.id, nil, nil, nil, done, learned, understood, more, nil)
+            a.log_activity()
+
+            flash[:saved] = "Aktiviteten sparades"
+            redirect back
+        end
+
+        post '/edit/:id' do
+            edit_log_id = params[:id].to_i
+            done_updated = params["done"].to_s
+            learned_updated = params["learned"].to_s
+            understood_updated = params["understood"].to_s
+            more_updated = params["more"].to_s
+
+            @actv = @activities.detect { |a| a.activity_id == edit_log_id }
+            @actv.update_activity(done_updated, learned_updated, understood_updated, more_updated)
+
+            flash[:saved] = "Aktiviteten uppdaterades"
+            redirect '/'
+        end
+
+        post '/delete/:id' do
+            delete_log_id = params[:id].to_i
+            actv = @activities.detect { |a| a.activity_id == delete_log_id }
+            actv.delete_activity()
+
+            flash[:deleted_activity] = "Aktiviteten togs bort"
+            redirect '/'
+        end
+
     end
 
-    post '/activity/edit/:id' do
-        edit_log_id = params[:id].to_i
-        done_updated = params["done"].to_s
-        learned_updated = params["learned"].to_s
-        understood_updated = params["understood"].to_s
-        more_updated = params["more"].to_s
-
-        @actv = @activities.detect { |a| a.activity_id == edit_log_id }
-        @actv.update_activity(done_updated, learned_updated, understood_updated, more_updated)
-
-        flash[:saved] = "Aktiviteten uppdaterades"
-        redirect '/'
-    end
-
-    post '/activity/delete/:id' do
-        delete_log_id = params[:id].to_i
-        actv = @activities.detect { |a| a.activity_id == delete_log_id }
-        actv.delete_activity()
-
-        flash[:deleted_activity] = "Aktiviteten togs bort"
-        redirect '/'
+    namespace '/admin' do
+        get '/?' do
+            slim :admin
+        end
     end
 
 end

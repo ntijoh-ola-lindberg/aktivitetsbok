@@ -8,6 +8,7 @@ source "https://rubygems.org"
 # brew cask install chromedriver
 
 gem "sinatra"
+gem "sinatra-contrib"
 gem "bcrypt"
 gem "rerun"
 gem "sqlite3"

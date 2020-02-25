@@ -2,6 +2,8 @@ h1 id="greeting" = "#{@greeting}!"
 nav
     p= "Inloggad som: #{@current_user.username}"
     a id="logout-button" href='/logout' Logga ut
+    -if @current_user.is_teacher
+        a id="admin" href='/admin' Admin
 
 main
     fieldset id="log-activity"

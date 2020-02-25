@@ -4,6 +4,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ansi (1.5.0)
+    backports (3.16.1)
     bcrypt (3.1.13)
     builder (3.2.4)
     byebug (11.0.1)
@@ -28,6 +29,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    multi_json (1.14.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nokogiri (1.10.7)
@@ -57,6 +59,13 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
+    sinatra-contrib (2.0.8.1)
+      backports (>= 2.8.2)
+      multi_json
+      mustermann (~> 1.0)
+      rack-protection (= 2.0.8.1)
+      sinatra (= 2.0.8.1)
+      tilt (~> 2.0)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -79,6 +88,7 @@ DEPENDENCIES
   rerun
   selenium-webdriver
   sinatra
+  sinatra-contrib
   slim
   sqlite3
 
