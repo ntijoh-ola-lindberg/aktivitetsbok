@@ -32,8 +32,8 @@ main
         - for @act in @activities
                 article id=@act.activity_id
                     section.dates
-                        - if @act.updated_date
-                            time.updated=@act.updated_date
+                        - if @act.date_updated
+                            time.updated=@act.date_updated
                             time.original=@act.date
                         - else
                             time.original=@act.date

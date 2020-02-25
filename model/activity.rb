@@ -11,9 +11,9 @@ class Activity
                 :learned, 
                 :understood, 
                 :more, 
-                :updated_date
+                :date_updated
 
-    def initialize (dbhandler, user_id, activity_id=nil, username=nil, date=nil, done=nil, learned=nil, understood=nil, more=nil, updated_date=nil)
+    def initialize (dbhandler, user_id, activity_id=nil, username=nil, date=nil, done=nil, learned=nil, understood=nil, more=nil, date_updated=nil)
         @dbhandler = dbhandler 
 
         @user_id = user_id
@@ -24,11 +24,11 @@ class Activity
         @learned = learned
         @understood = understood
         @more = more
-        @updated_date = updated_date
+        @date_updated = date_updated
     end
 
     def log_activity()
-        @dbhandler.db.execute("INSERT INTO activities (log_student, 
+        @dbhandler.db.execute("INSERT INTO activities (user_id, 
                                                       done, 
                                                       learned, 
                                                       understood, 
@@ -44,38 +44,38 @@ class Activity
                         learned = ?,
                         understood = ?,
                         more = ?,
-                        updated_date = ?
+                        date_updated = ?
                     WHERE log_id = ?", 
                     done_updated, learned_updated, understood_updated, more_updated, t, @activity_id);
     end
 
     def delete_activity()
         @dbhandler.db.execute("DELETE FROM activities
-                     WHERE log_id = ?", @activity_id);
+                     WHERE activities.id = ?", @activity_id);
     end
 
 
     def self.get_all_activities_for_userid(dbhandler, userid)
-        all_activities_for_user_hash = dbhandler.db.execute("SELECT log_id, id, username, log_date, done, learned, understood, more, updated_date
+        all_activities_for_user_hash = dbhandler.db.execute("SELECT activities.id, users.id, username, date, done, learned, understood, more, date_updated
             FROM users 
-            INNER JOIN activities ON users.id = activities.log_student 
+            INNER JOIN activities ON users.id = activities.user_id 
             WHERE users.id = ?
-            ORDER BY log_date DESC", userid)
+            ORDER BY date DESC", userid)
 
         all_activities_for_user = []
         all_activities_for_user_hash.each { |activity| 
             all_activities_for_user.push(
                 Activity.new(
                     dbhandler, 
-                    activity['id'],
-                    activity['log_id'],
+                    activity['activities.id'],
+                    activity['users.id'],
                     activity['username'],
-                    activity['log_date'],
+                    activity['date'],
                     activity['done'],
                     activity['learned'],
                     activity['understood'],
                     activity['more'],
-                    activity['updated_date']
+                    activity['date_updated']
                 )
             ) 
         }

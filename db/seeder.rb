@@ -29,15 +29,15 @@ class Seeder
 
         db.execute("
             CREATE TABLE activities (
-                log_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                log_student INTEGER,
-                log_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER,
+                date TEXT DEFAULT CURRENT_TIMESTAMP,
+                date_updated TEXT,
                 done TEXT NOT NULL,
                 learned TEXT NOT NULL,
                 understood TEXT NOT NULL,
                 more TEXT NOT NULL,
-                updated_date TEXT,
-                FOREIGN KEY(log_student) REFERENCES users(id)
+                FOREIGN KEY(user_id) REFERENCES users(id)
             )
         ")
     end
@@ -57,15 +57,15 @@ class Seeder
 
     def self.populate_activities
         activities = [
-            {user_id: "1", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2021-01-01 01:01:01"},
-            {user_id: "2", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2022-01-01 01:01:01"},
-            {user_id: "3", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2023-01-01 01:01:01"},
-            {user_id: "4", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", updated_date: "2024-01-01 01:01:01"}
+            {user_id: "1", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", date_updated: "2021-01-01 01:01:01"},
+            {user_id: "2", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", date_updated: "2022-01-01 01:01:01"},
+            {user_id: "3", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", date_updated: "2023-01-01 01:01:01"},
+            {user_id: "4", done: "Jag gjorde något", learned: "Jag lärde mig något", understood: "Jag förstod något", more: "Jag vill lära mig med om något", date_updated: "2024-01-01 01:01:01"}
         ]
 
         activities.each do |activity|
-            db.execute("INSERT INTO activities (log_student, done, learned, understood, more, updated_date) VALUES (?,?,?,?,?,?)", 
-                activity[:user_id], activity[:done], activity[:learned], activity[:understood], activity[:more], activity[:updated_date]);
+            db.execute("INSERT INTO activities (user_id, done, learned, understood, more, date_updated) VALUES (?,?,?,?,?,?)", 
+                activity[:user_id], activity[:done], activity[:learned], activity[:understood], activity[:more], activity[:date_updated]);
         end
     end
 end
