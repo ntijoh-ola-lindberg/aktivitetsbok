@@ -4,6 +4,8 @@
 #rake test:unit
 #rake test:acceptance
 
+#http://127.0.0.1:9292/
+
 task :seed do
     require "bundler"
     Bundler.require
