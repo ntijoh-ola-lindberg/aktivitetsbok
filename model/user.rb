@@ -13,4 +13,18 @@ class User
         @is_teacher = is_teacher
     end
 
+    # roles
+    # 1 = teacher
+    # 2 = studend
+    def self.get_user(global_role, id, username, password_hash)
+
+        if global_role == 1
+            return Teacher.new(id, username, password_hash, @db_handler, true)
+        elsif global_role == 2
+            return Student.new(id, username, password_hash, @db_handler, false)
+        else 
+            return false
+        end        
+    end
+
 end
