@@ -12,8 +12,7 @@ class AppController < Sinatra::Base
     end
 
     get '/' do
-        # todo: redirect till /student om vi är 
-        #       student och /larare om vi är lärare
+        #TODO: redirect to student if we are a student and teacher if teacher
     end
 
     # Hämtar elevens loggar från databasen och visar i vyn
