@@ -23,6 +23,7 @@ class App < Sinatra::Base
         @db_handler = DbHandler.new 
         @login_handler = LoginHandler.new(@db_handler) 
 
+        #TODO: cookie implementation is really unsecure - MUST be removed / replaced
         p "Cookie: '#{cookies[:user_id].nil?}' Session: '#{session[:user_id].nil?}'"
 
         if request.get? && request.path != "/login" && session[:user_id].nil? && cookies[:user_id].nil?
