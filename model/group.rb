@@ -17,11 +17,11 @@ class Group
 
     def add_user(user, group_role)
         if group_role == 1
-            p "Adding user to #{this.name} as teacher: #{user.name}"
+            p "Adding user to #{@name} as teacher: #{user.name}"
             #@teachers.push(user)
         elsif group_role == 2
             #@students.push(user)
-            p "Adding user to #{this.name} as student: #{user.name}"
+            p "Adding user to #{@name} as student: #{user.name}"
         end
 
     end
@@ -52,6 +52,8 @@ class Group
                 group['username'],
                 group['password_hash']
             )
+
+            p "User: #{user.name}"
 
             group_to_add = all_groups.detect { |ag| 
                 p "#{ag.id} , #{group['group_id']}"
