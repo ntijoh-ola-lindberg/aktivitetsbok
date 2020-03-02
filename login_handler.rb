@@ -22,7 +22,7 @@ class LoginHandler
         password_hashed = user["password_hash"].to_s
         role = user["role"].to_i
 
-        return get_role(role, id, username, password_hashed)
+        return create_new_user(role, id, username, password_hashed)
     end
 
     def login(username, password_nothashed)
@@ -43,7 +43,7 @@ class LoginHandler
         password_hash = BCrypt::Password.new(db_password_hashed)
 
         if password_hash == password_nothashed
-            return get_role(role, id, username, password_hash)
+            return create_new_user(role, id, username, password_hash)
         end
     end
 
@@ -51,7 +51,7 @@ class LoginHandler
     # roles
     # 1 = teacher
     # 2 = studend
-    def get_role(role, id, username, password_hash)
+    def create_new_user(role, id, username, password_hash)
         if role == 1
             return Teacher.new(id, username, password_hash, @db_handler, true)
         elseif role == 2
