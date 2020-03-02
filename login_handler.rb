@@ -20,9 +20,9 @@ class LoginHandler
         id = user["id"].to_i
         username = user["username"].to_s
         password_hashed = user["password_hash"].to_s
-        role = user["role"].to_i
+        global_role = user["global_role"].to_i
 
-        return create_new_user(role, id, username, password_hashed)
+        return create_new_user(global_role, id, username, password_hashed)
     end
 
     def login(username, password_nothashed)
@@ -38,12 +38,14 @@ class LoginHandler
         id = user["id"].to_i
         username = user["username"].to_s
         db_password_hashed = user["password_hash"].to_s
-        role = user["role"].to_i
+        global_role = user["global_role"].to_i
         
         password_hash = BCrypt::Password.new(db_password_hashed)
 
         if password_hash == password_nothashed
-            return create_new_user(role, id, username, password_hash)
+            return create_new_user(global_role, id, username, password_hash)
+        else 
+            p "Login failed"
         end
     end
 
@@ -51,10 +53,11 @@ class LoginHandler
     # roles
     # 1 = teacher
     # 2 = studend
-    def create_new_user(role, id, username, password_hash)
-        if role == 1
+    def create_new_user(global_role, id, username, password_hash)
+
+        if global_role == 1
             return Teacher.new(id, username, password_hash, @db_handler, true)
-        elseif role == 2
+        elseif global_role == 2
             return Student.new(id, username, password_hash, @db_handler, false)
         else 
             return false

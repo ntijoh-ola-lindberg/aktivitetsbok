@@ -1,15 +1,15 @@
 require 'byebug'
 require 'rack-flash'
+require "sinatra"
+require "sinatra/base"
+require "sinatra/namespace"
+
 require_relative 'db_handler.rb'
 require_relative 'login_handler.rb'
 require_relative 'model/hi.rb'
 require_relative 'model/activity.rb'
 require_relative 'model/student.rb'
-
-require "sinatra"
-require "sinatra/base"
-require "sinatra/namespace"
-require "sinatra/cookies"
+require_relative 'model/group.rb'
 
 class App < Sinatra::Base
     register Sinatra::Namespace
@@ -19,27 +19,15 @@ class App < Sinatra::Base
     use Rack::Flash
 
     before do
-
         @db_handler = DbHandler.new 
         @login_handler = LoginHandler.new(@db_handler) 
 
-        #TODO: cookie implementation is really unsecure - MUST be removed / replaced
-        p "Cookie: '#{cookies[:user_id].nil?}' Session: '#{session[:user_id].nil?}'"
-
-        if request.get? && request.path != "/login" && session[:user_id].nil? && cookies[:user_id].nil?
+        if request.get? && request.path != "/login" && session[:user_id].nil? 
             redirect '/login'
         else
-            
-            unless session[:user_id].nil?
-                uid = session[:user_id]
-            else
-                uid = cookies[:user_id]
-            end
-
-            @current_user = @login_handler.get_user_by_id(uid)
-            @activities = Activity.get_all_activities_for_userid(@db_handler, uid)
+            @current_user = @login_handler.get_user_by_id(session[:user_id])
+            @activities = Activity.get_all_activities_for_userid(@db_handler, session[:user_id])
         end
-
     end
 
     get '/login' do
@@ -54,13 +42,6 @@ class App < Sinatra::Base
 
         if user
             session[:user_id] = user.id
-
-            #30 days cookie
-            response.set_cookie('user_id',
-                {   :value => user.id, 
-                    :expires => Time.now + (60 * 60 * 24 * 30), 
-                    :path => '/'  })
-
             redirect '/'
         else
             flash[:failedlogin_anv_losenord] = "Inloggningen misslyckades. Lösenord och / eller användarnamn är ej rätt."
@@ -125,6 +106,11 @@ class App < Sinatra::Base
 
     namespace '/admin' do
         get '/?' do
+
+            p @current_user
+
+            @groups = Group.get_all_groups_for_userid(@db_handler, 1)
+
             slim :admin
         end
     end
