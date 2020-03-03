@@ -13,6 +13,10 @@ class User
         @is_teacher = is_teacher
     end
 
+    def to_s
+        "id: '#{@id}', username: '#{@username}', is_teacher: '#{@is_teacher}'"
+    end
+
     # roles
     # 1 = teacher
     # 2 = studend

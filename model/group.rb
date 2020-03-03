@@ -11,19 +11,30 @@ class Group
         @id = id
         @name = name
 
-        @studends = []
-        @teachers = []
+        unless students.nil?
+            @students = students
+        else
+            @students = []
+        end
+
+        unless teachers.nil?
+            @teachers = teachers
+        else
+            @teachers = []
+        end
+
+    end
+
+    def to_s
+        "Group id: #{@id}, name: #{@name}, students: #{@students.length},  teachers: #{@teachers.length}"
     end
 
     def add_user(user, group_role)
         if group_role == 1
-            p "Adding user to #{@name} as teacher: #{user.name}"
-            #@teachers.push(user)
+            @teachers.push(user)
         elsif group_role == 2
-            #@students.push(user)
-            p "Adding user to #{@name} as student: #{user.name}"
+            @students.push(user)
         end
-
     end
 
     def self.get_all_groups_for_userid(db_handler, admin_user_id)
@@ -33,38 +44,26 @@ class Group
                                                      JOIN users ON users.id = groups_users.user_id
                                                      ORDER BY group_id")
         
+                                                     #todo: Add where clause - currently selecting all groups
+        
         all_groups = []
 
-        #add all groups
+        # Add all groups that aren't in the list
         all_groups_for_user_hash.each { |g| 
-            p "Debug: '#{g['group_id']}', '#{g['name']}'"
-            all_groups.push(Group.new(db_handler, g['group_id'], g['name'], nil, nil))
+            unless all_groups.detect { |duplicate| duplicate.id == g['group_id'] }
+                all_groups.push(Group.new(db_handler, g['group_id'], g['name'], nil, nil))
+            end
         }
 
-        all_groups.each { |debug| p "Debug: p.group_name'#{debug.name}'"}
-
-        #add users to correct group
+        # Add all users to correct group or groups
+        #  1 Create an User object from hash
+        #  2 Find correct group based on users group id
+        #  3 Add user to the list of users in that group (with role)
         all_groups_for_user_hash.each { |group| 
-            #global_role, id, username, password_hash)
-            user = User.get_user(
-                group['global_role'],
-                group['user_id'],
-                group['username'],
-                group['password_hash']
-            )
-
-            p "User: #{user.name}"
-
-            group_to_add = all_groups.detect { |ag| 
-                p "#{ag.id} , #{group['group_id']}"
-                ag.id == group['group_id'] 
-            }
-
-            p "#{group_to_add.name}"
-
-            group_to_add.add_user(user, group['group_role'])
+            user = User.get_user(group['global_role'], group['user_id'], group['username'], group['password_hash'])
+            searched_user_group = all_groups.detect { |ag| ag.id == group['group_id'] }
+            searched_user_group.add_user(user, group['group_role'])
         }
-
 
         return all_groups
     end

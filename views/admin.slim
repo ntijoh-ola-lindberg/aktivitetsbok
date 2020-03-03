@@ -6,4 +6,15 @@ nav
 
 h2 Mina klasser
 
-pre #{@groups}
+- for g in @groups 
+    h3 Group: id: #{g.id}, name: #{g.name}, students: #{g.students.length} teachers: #{g.teachers.length}
+
+    h4 Students
+    ul
+    - for s in g.students
+        li #{s}
+    
+    h4 Teachers
+    ul
+    - for t in g.teachers
+        li #{t}

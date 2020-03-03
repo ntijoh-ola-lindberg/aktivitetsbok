@@ -13,7 +13,6 @@ require_relative 'model/group.rb'
 
 class App < Sinatra::Base
     register Sinatra::Namespace
-    helpers Sinatra::Cookies
 
     enable :sessions
     use Rack::Flash
