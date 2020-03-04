@@ -117,6 +117,7 @@ class Seeder
             {group_id: 2, user_id: 6, group_role: 2},
             {group_id: 2, user_id: 7, group_role: 2},
             {group_id: 2, user_id: 8, group_role: 2},
+            {group_id: 1, user_id: 6, group_role: 2},
         ]
 
         groups_users.each do |gu|
