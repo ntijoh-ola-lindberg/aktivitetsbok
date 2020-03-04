@@ -48,21 +48,15 @@ class Group
         
         all_groups = []
 
-        # Add all groups that aren't in the list
         all_groups_for_user_hash.each { |g| 
-            unless all_groups.detect { |duplicate| duplicate.id == g['group_id'] }
-                all_groups.push(Group.new(db_handler, g['group_id'], g['name'], nil, nil))
+            new_user = User.get_user(g['global_role'], g['user_id'], g['username'], g['password_hash'])
+            group = all_groups.detect { |dup| dup.id == g['group_id'] }
+            unless group
+                group = Group.new(db_handler, g['group_id'], g['name'], nil, nil)
+                all_groups.push(group)
             end
-        }
 
-        # Add all users to correct group or groups
-        #  1 Create an User object from hash
-        #  2 Find correct group based on users group id
-        #  3 Add user to the list of users in that group (with role)
-        all_groups_for_user_hash.each { |group| 
-            user = User.get_user(group['global_role'], group['user_id'], group['username'], group['password_hash'])
-            searched_user_group = all_groups.detect { |ag| ag.id == group['group_id'] }
-            searched_user_group.add_user(user, group['group_role'])
+            group.add_user(new_user, g['group_role'])
         }
 
         return all_groups
