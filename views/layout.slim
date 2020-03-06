@@ -4,7 +4,8 @@ html
         title Aktivitetslog
         link rel="stylesheet" type="text/css" href="/css/style.css?#{Time.now.to_i}" 
         / disable css file caching
-    body
+    body class="#{request.path_info.delete('/')}"
+
         -if flash
             -if flash[:saved] 
                 p#flash= flash[:saved]
@@ -16,4 +17,5 @@ html
                 p#flash= flash[:failedlogin_anv_losenord]
 
         == yield
+
     script src="/js/script.js?#{Time.now.to_i}"
