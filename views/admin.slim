@@ -4,17 +4,32 @@ nav
     a href="/admin/edit-student" Redigera / ta bort elev
     a href="/admin/edit-class" Redigera / ta bort klass
 
-h2 Mina klasser
+h2 Grupper
 
 - for g in @groups 
-    h3 Group: id: #{g.id}, name: #{g.name}, students: #{g.students.length} teachers: #{g.teachers.length}
+    div class="wrapper #{g.id}"
+        h3 #{g.name} 
+        p #{g.students.length} studenter, #{g.teachers.length} lärare
 
-    h4 Students
-    ul
-    - for s in g.students
-        li #{s}
-    
-    h4 Teachers
-    ul
-    - for t in g.teachers
-        li #{t}
+        div class="users-lists"
+            section 
+                h4 Lärare
+                table
+                    tr 
+                        th Användare
+                        th ID
+                    - for s in g.teachers
+                        tr
+                            td #{s.username}
+                            td #{s.id}
+            section
+                h4 Studenter
+                table
+                    tr 
+                        th Användare
+                        th ID
+                    - for s in g.students
+                        tr
+                            td #{s.username}
+                            td #{s.id}
+                

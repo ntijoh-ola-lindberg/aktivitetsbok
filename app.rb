@@ -21,11 +21,17 @@ class App < Sinatra::Base
         @db_handler = DbHandler.new 
         @login_handler = LoginHandler.new(@db_handler) 
 
+        session[:user_id] = 1 #todo: remove - disables login system for dev
+
         if request.get? && request.path != "/login" && session[:user_id].nil? 
             redirect '/login'
         else
+
+            #@current_user = @login_handler.get_user_by_id(session[:user_id])
             @current_user = @login_handler.get_user_by_id(session[:user_id])
             @activities = Activity.get_all_activities_for_userid(@db_handler, session[:user_id])
+
+            @greeting = Hi.get_random_greeting
         end
     end
 
@@ -56,8 +62,6 @@ class App < Sinatra::Base
     end
 
     get '/' do
-        @greeting = Hi.get_random_greeting
-        
         @log_id = params["logid"].to_i
 
         slim :activity        
@@ -108,7 +112,7 @@ class App < Sinatra::Base
 
             p @current_user
 
-            @groups = Group.get_all_groups_for_userid(@db_handler, 1)
+            @groups = Group.get_all_groups(@db_handler)
 
             slim :admin
         end

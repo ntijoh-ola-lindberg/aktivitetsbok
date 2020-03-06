@@ -16,6 +16,14 @@ html
             -if flash[:failedlogin_anv_losenord]
                 p#flash= flash[:failedlogin_anv_losenord]
 
+        h1 id="greeting" = "#{@greeting}!"
+        p= "Inloggad som: #{@current_user.username}"
+        nav
+            a href='/' Aktiviteter
+            -if @current_user.is_teacher
+                a id="admin" href='/admin' Admin
+
+            a id="logout-button" href='/logout' Logga ut
         == yield
 
     script src="/js/script.js?#{Time.now.to_i}"

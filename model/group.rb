@@ -26,7 +26,7 @@ class Group
     end
 
     def to_s
-        "Group id: #{@id}, name: #{@name}, students: #{@students.length},  teachers: #{@teachers.length}"
+        "Group id: #{@id}, name: #{@name}, no. of students: #{@students.length},  no. of teachers: #{@teachers.length}"
     end
 
     def add_user(user, group_role)
@@ -37,19 +37,18 @@ class Group
         end
     end
 
-    def self.get_all_groups_for_userid(db_handler, admin_user_id)
+    def self.get_all_groups(db_handler)
         all_groups_for_user_hash = db_handler.db.execute("SELECT groups.id, name, date_created, group_id, user_id, group_role, username, password_hash, global_role
                                                      FROM groups 
                                                      JOIN groups_users ON groups.id = groups_users.group_id
                                                      JOIN users ON users.id = groups_users.user_id
                                                      ORDER BY group_id")
         
-                                                     #todo: Add where clause - currently selecting all groups
-        
         all_groups = []
 
         all_groups_for_user_hash.each { |g| 
             new_user = User.get_user(g['global_role'], g['user_id'], g['username'], g['password_hash'])
+            
             group = all_groups.detect { |dup| dup.id == g['group_id'] }
             unless group
                 group = Group.new(db_handler, g['group_id'], g['name'], nil, nil)
