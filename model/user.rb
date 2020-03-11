@@ -4,7 +4,7 @@ class User
 
     attr_reader :id, :username, :password_hashed, :is_teacher
 
-    def initialize(user_id, username, password_hashed, dbhandler, is_teacher) 
+    def initialize(dbhandler, user_id, username, password_hashed, is_teacher) 
         @dbhandler = dbhandler
 
         @id = user_id
@@ -23,9 +23,9 @@ class User
     def self.get_user(global_role, id, username, password_hash)
 
         if global_role == 1
-            return Teacher.new(id, username, password_hash, @db_handler, true)
+            return Teacher.new(@db_handler, id, username, password_hash, true)
         elsif global_role == 2
-            return Student.new(id, username, password_hash, @db_handler, false)
+            return Student.new(@db_handler, id, username, password_hash, false)
         else 
             return false
         end        

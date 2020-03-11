@@ -176,3 +176,15 @@ body.admin h3,
 body.admin h4 {
     margin: 0.4em 0;
 }
+
+body.admin .members-nav form {
+    display: flex;
+}
+
+body.admin .members-nav * {
+    margin: 0;
+}
+
+body.admin .members-nav button {
+    font-size: 14px;
+}

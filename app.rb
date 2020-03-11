@@ -108,14 +108,36 @@ class App < Sinatra::Base
     end
 
     namespace '/admin' do
-        get '/?' do
 
-            p @current_user
+        before do
+
+            unless @current_user.is_teacher
+                flash[:permission_denied] = 'Användaren är inte lärare: #{@current_user.username}'
+                redirect '/'
+            end
 
             @groups = Group.get_all_groups(@db_handler)
+        end
 
+        get '/?' do
             slim :admin
         end
+
+        post '/:id/new-student/?' do
+            group_id = params[:id]
+            new_user_email = params['new-user-email']
+            new_user_password = params['new-user-password']
+            new_user_hashed_password = @login_handler.hash_password(new_user_password)
+
+            new_user = User.new(@db_handler, nil, new_user_email, new_user_hashed_password, false)
+
+            current_group = @groups.detect{ | cg | cg.id.to_i == group_id.to_i }
+
+            current_group.add_user(new_user, false)
+
+            redirect '/admin'
+        end
+
     end
 
 end

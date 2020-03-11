@@ -10,6 +10,12 @@ h2 Grupper
     div class="wrapper #{g.id}"
         h3 #{g.name} 
         p #{g.students.length} studenter, #{g.teachers.length} lärare
+        div class="members-nav" 
+            p Ny användare
+            form action="/admin/#{g.id}/new-student" method="post"
+                input# type="email" name="new-user-email" placeholder="E-mail" required=""/
+                input# type="text" name="new-user-password" placeholder="Password" required=""/
+                button type="submit" Lägg till
 
         div class="users-lists"
             section 

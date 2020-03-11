@@ -29,12 +29,18 @@ class Group
         "Group id: #{@id}, name: #{@name}, no. of students: #{@students.length},  no. of teachers: #{@teachers.length}"
     end
 
-    def add_user(user, group_role)
-        if group_role == 1
-            @teachers.push(user)
-        elsif group_role == 2
-            @students.push(user)
+    def add_user(user, group_teacher)
+        if group_teacher
+            gt = 1
+        elsif group_teacher
+            gt = 2
         end
+
+        #todo: move to User
+        e = @db_handler.db.execute("INSERT INTO users (username, password_hash, global_role) VALUES (?,?,?)", user.username, user.password_hashed, gt)
+        result = @db_handler.db.execute("SELECT id FROM users WHERE username == (?)",user.username).first
+
+        @db_handler.db.execute("INSERT INTO groups_users (group_id, user_id, group_role) VALUES (?,?,?)", @id, result['id'], gt)
     end
 
     def self.get_all_groups(db_handler)
@@ -55,7 +61,11 @@ class Group
                 all_groups.push(group)
             end
 
-            group.add_user(new_user, g['group_role'])
+            if g['group_role'] == 1 
+                group.teachers.push(new_user)
+            elsif g['group_role'] == 2 
+                group.students.push(new_user)
+            end
         }
 
         return all_groups

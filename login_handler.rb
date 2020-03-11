@@ -49,6 +49,10 @@ class LoginHandler
         end
     end
 
+    def hash_password(password_cleartext)
+        return BCrypt::Password.new(password_cleartext)
+    end
+
 
     # roles
     # 1 = teacher
@@ -56,9 +60,9 @@ class LoginHandler
     def create_new_user(global_role, id, username, password_hash)
 
         if global_role == 1
-            return Teacher.new(id, username, password_hash, @db_handler, true)
+            return Teacher.new(id, @db_handler, username, password_hash, true)
         elseif global_role == 2
-            return Student.new(id, username, password_hash, @db_handler, false)
+            return Student.new(id, @db_handler, username, password_hash, false)
         else 
             return false
         end        
