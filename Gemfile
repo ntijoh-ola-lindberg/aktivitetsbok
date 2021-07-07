@@ -4,6 +4,7 @@ source "https://rubygems.org"
 # brew install ruby ruby-install
 # ruby-install ruby 2.6.3
 
+# To install the bundler: gem install bundler
 # To install required bundles use: bundle install
 # brew cask install chromedriver
 
@@ -11,7 +12,7 @@ gem "sinatra"
 gem "sinatra-contrib"
 gem "bcrypt"
 gem "rerun"
-gem "sqlite3"
+gem "sqlite3"   
 gem "slim"
 gem 'rack-flash3'
 

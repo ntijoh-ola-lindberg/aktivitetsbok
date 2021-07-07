@@ -7,6 +7,8 @@ class User
     def initialize(dbhandler, user_id, username, password_hashed, is_teacher) 
         @dbhandler = dbhandler
 
+        #p "user.rb init - uid:  #{user_id} username: #{username}"
+
         @id = user_id
         @username = username
         @password_hashed = password_hashed

@@ -34,7 +34,7 @@ class Activity
                                                       understood, 
                                                       more) 
                               VALUES (?, ?, ?, ?, ?)", 
-                                @user_id, @done, @learned, @understood, @more);
+                                Integer(@user_id), @done, @learned, @understood, @more);
     end
     
     def update_activity(done_updated, learned_updated, understood_updated, more_updated)

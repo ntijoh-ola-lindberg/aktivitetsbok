@@ -1,5 +1,7 @@
 class Seeder
 
+    #Browse SQL-file with https://sqlitebrowser.org
+
     def self.seed!
        drop_tables 
        create_tables
