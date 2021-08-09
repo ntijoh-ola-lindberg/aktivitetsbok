@@ -1,8 +1,9 @@
 source "https://rubygems.org"
 
-# To install Ruby
-# brew install ruby ruby-install
-# ruby-install ruby 2.6.3
+# To install 
+# brew install ruby ruby-install chruby
+# ruby-install 3.0.2
+# 
 
 # To install the bundler: gem install bundler
 # To install required bundles use: bundle install
@@ -25,3 +26,4 @@ gem 'minitest-reporters'
 
 #debug
 gem "byebug"
+gem "webrick", "~> 1.7"

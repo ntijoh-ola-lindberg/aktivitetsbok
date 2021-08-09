@@ -17,11 +17,11 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     ffi (1.15.3)
-    listen (3.5.1)
+    listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mini_mime (1.1.0)
-    mini_portile2 (2.5.3)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     minitest-reporters (1.4.3)
       ansi
@@ -31,8 +31,8 @@ GEM
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.11.7)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.12.2)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     public_suffix (4.0.6)
     racc (1.5.2)
@@ -50,7 +50,7 @@ GEM
     rerun (0.13.1)
       listen (~> 3.0)
     ruby-progressbar (1.11.0)
-    ruby2_keywords (0.0.4)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -72,6 +72,7 @@ GEM
     sqlite3 (1.4.2)
     temple (0.8.2)
     tilt (2.0.10)
+    webrick (1.7.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
@@ -91,6 +92,7 @@ DEPENDENCIES
   sinatra-contrib
   slim
   sqlite3
+  webrick (~> 1.7)
 
 BUNDLED WITH
    2.2.22
