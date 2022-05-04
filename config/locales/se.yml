@@ -1,0 +1,8 @@
+se:
+  greeting: "Hej"
+  log_activity: "Logga aktivitet"
+  what_have_you_done_lesson: "Vad har du gjort under lektionen?"
+  what_have_you_learned: "Vad har du lärt dig?"
+  what_didnt_you_understand: "Vad förstod du inte / vilka frågor har du inte fått svar på?"
+  what_to_learn: "Vad vill du lära dig mer om?"
+  save: "Spara"

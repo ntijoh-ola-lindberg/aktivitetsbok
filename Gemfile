@@ -27,3 +27,5 @@ gem 'minitest-reporters'
 #debug
 gem "byebug"
 gem "webrick", "~> 1.7"
+
+gem "i18n", "~> 1.10"

@@ -3,6 +3,7 @@ require 'rack-flash'
 require "sinatra"
 require "sinatra/base"
 require "sinatra/namespace"
+require "I18n"
 
 require_relative 'db_handler.rb'
 require_relative 'login_handler.rb'
@@ -23,6 +24,8 @@ class App < Sinatra::Base
 
         session[:user_id] = 1 #todo: remove - disables login system for dev
 
+        init_translations
+
         if request.get? && request.path != "/login" && session[:user_id].nil? 
             redirect '/login'
         else
@@ -34,6 +37,16 @@ class App < Sinatra::Base
             @greeting = Hi.get_random_greeting
         end
     end
+
+    def init_translations 
+        I18n.config.available_locales = [:en, :se]
+        I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
+        p "Available locales: '" + I18n.available_locales.to_s + "'"
+
+        I18n.locale = :se
+    end
+
+        
 
     get '/login' do
         slim :login

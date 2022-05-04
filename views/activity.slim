@@ -1,25 +1,25 @@
 main
     fieldset id="log-activity"
-        legend Logga aktivitet
+        legend #{I18n.t(:log_activity)}
         
         form action="activity/log" method="post" id="activity-log-form"
-            <label>Vad har du gjort under lektionen?
+            <label>#{I18n.t(:what_have_you_done_lesson)}
                 textarea name="done"
             </label>
 
-            <label>Vad har du lärt dig?
+            <label>#{I18n.t(:what_have_you_learned)}
                 textarea name="learned"
             </label>
 
-            <label>Vad förstod du inte / vilka frågor har du inte fått svar på?
+            <label>#{I18n.t(:what_didnt_you_understand)}
                 textarea name="understood"
             </label>
 
-            <label>Vad vill du lära dig mer om?
+            <label>#{I18n.t(:what_to_learn)}
                 textarea name="more"
             </label>
 
-            button type="submit" Spara
+            button type="submit"#{I18n.t(:save)} 
 
     section id="activity"
         h2 Din senaste aktivitet
