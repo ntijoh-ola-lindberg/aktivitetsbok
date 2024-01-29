@@ -7,7 +7,7 @@ source "https://rubygems.org"
 
 # To install the bundler: gem install bundler
 # To install required bundles use: bundle install
-# brew cask install chromedriver
+# brew install chromedriver
 
 gem "sinatra"
 gem "sinatra-contrib"
